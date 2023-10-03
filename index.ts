@@ -5,7 +5,7 @@ import * as path from 'node:path'
 
 import minimist from 'minimist'
 import prompts from 'prompts'
-import { red, green, bold } from 'kolorist'
+import { red, green, bold, yellow } from 'kolorist'
 
 import ejs from 'ejs'
 
@@ -104,6 +104,7 @@ async function init() {
       argv.pinia ??
       argv.tests ??
       argv.vitest ??
+      argv.sonarQube ??
       argv.cypress ??
       argv.nightwatch ??
       argv.playwright ??
@@ -126,6 +127,7 @@ async function init() {
     needsRouter?: boolean
     needsPinia?: boolean
     needsVitest?: boolean
+    needsSonarQube?: boolean
     needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
@@ -225,6 +227,19 @@ async function init() {
           inactive: 'No'
         },
         {
+          name: 'needsSonarQube',
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed || !values.needsVitest) {
+              return null
+            }
+            return 'toggle'
+          },
+          message: 'Add SonarQube for code coverage?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
           name: 'needsE2eTesting',
           type: () => (isFeatureFlagsUsed ? null : 'select'),
           message: 'Add an End-to-End Testing Solution?',
@@ -311,6 +326,7 @@ async function init() {
     needsRouter = argv.router,
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
+    needsSonarQube = argv.SneedsSonarQube,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
     needsPrettier = argv['eslint-with-prettier'],
     needsVueUse = argv.vueUse,
@@ -362,6 +378,9 @@ async function init() {
   }
   if (needsVitest) {
     render('config/vitest')
+  }
+  if (needsSonarQube) {
+    render('config/sonarQube')
   }
   if (needsCypress) {
     render('config/cypress')
@@ -520,8 +539,7 @@ async function init() {
       needsPlaywright,
       needsNightwatchCT,
       needsCypressCT,
-      needsEslint,
-      needsStorybook
+      needsEslint
     })
   )
 
@@ -538,6 +556,9 @@ async function init() {
   }
   if (needsStorybook) {
     console.log(`  ${bold(green('npx storybook@latest init --builder vite'))}`)
+  }
+  if (needsSonarQube) {
+    console.log(`  ${bold(yellow('Do not forget to update sonar-project.properties'))}`)
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'dev')))}`)
   console.log()

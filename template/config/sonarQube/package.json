@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "coverage": "vitest run --coverage",
+    "sonar": "npx sonar-scanner"
+  },
+  "devDependencies": {
+    "sonarqube-scanner": "^3.1.0"
+  }
+}
