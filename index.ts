@@ -108,6 +108,7 @@ async function init() {
       argv.nightwatch ??
       argv.playwright ??
       argv.eslint ??
+      argv.storybook ??
       argv.vueUse
     ) === 'boolean'
 
@@ -129,6 +130,7 @@ async function init() {
     needsEslint?: boolean
     needsPrettier?: boolean
     needsVueUse?: boolean
+    needsStorybook?: boolean
   } = {}
 
   try {
@@ -145,6 +147,8 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
+    // - Add VueUse - Collection of essential Composition Utilities?
+    // - Add Storybook?
     result = await prompts(
       [
         {
@@ -275,6 +279,14 @@ async function init() {
           initial: false,
           active: 'Yes',
           inactive: 'No'
+        },
+        {
+          name: 'needsStorybook',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: 'Add Storybook?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
         }
       ],
       {
@@ -301,7 +313,8 @@ async function init() {
     needsVitest = argv.vitest || argv.tests,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
     needsPrettier = argv['eslint-with-prettier'],
-    needsVueUse = argv.vueUse
+    needsVueUse = argv.vueUse,
+    needsStorybook = argv.storybook
   } = result
 
   const { needsE2eTesting } = result
@@ -507,7 +520,8 @@ async function init() {
       needsPlaywright,
       needsNightwatchCT,
       needsCypressCT,
-      needsEslint
+      needsEslint,
+      needsStorybook
     })
   )
 
@@ -521,6 +535,9 @@ async function init() {
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
   if (needsPrettier) {
     console.log(`  ${bold(green(getCommand(packageManager, 'format')))}`)
+  }
+  if (needsStorybook) {
+    console.log(`  ${bold(green('npx storybook@latest init --builder vite'))}`)
   }
   console.log(`  ${bold(green(getCommand(packageManager, 'dev')))}`)
   console.log()
