@@ -1,33 +1,69 @@
-# create-vue
+# Create Vue Fork
 
-The recommended way to start a Vite-powered Vue project
+TODO - Update github related stuff when transferred
 
-<p align="center">
-  <img src="https://github.com/vuejs/create-vue/blob/main/media/screenshot-cli.png?raw=true" width="800">
-</p>
+This is a fork of the <a href="https://github.com/vuejs/create-vue">create-vue</a>, where we are extending its existing functionality while keeping it up to date with the original repository. Feel free to contribute and help make this project even better!
 
-## Usage
+## Getting Started
 
-```sh
-npm create vue@latest
+Follow these steps to clone, build, and run the project:
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/vite-cli-bootstrap.git
+cd vite-cli-bootstrap
 ```
 
-Or, if you need to support IE11, you can create a Vue 2 project with:
+### 2. Install Dependencies
 
-```sh
-npm create vue@legacy
+Make sure you have <a href="https://pnpm.io/">pnpm</a> installed, as we'll be using it for package management.
+
+```bash
+pnpm install
 ```
 
-Note that the tag name (`@latest` or `@legacy`) MUST NOT be omitted, otherwise `npm` may resolve to a cached and outdated version of the package.
+### 3. Build the Project
 
-## Difference from Vue CLI
+To build the project, run the following command:
 
-- Vue CLI is based on webpack, while `create-vue` is based on [Vite](https://vitejs.dev/). Vite supports most of the configured conventions found in Vue CLI projects out of the box, and provides a significantly better development experience due to its extremely fast startup and hot-module replacement speed. Learn more about why we recommend Vite over webpack [here](https://vitejs.dev/guide/why.html).
+```bash
+pnpm run build
+```
 
-- Unlike Vue CLI, `create-vue` itself is just a scaffolding tool: it creates a pre-configured project base on the features you choose, and delegates the rest to Vite. Projects scaffolded this way can directly leverage the [Vite plugin ecosystem](https://vitejs.dev/plugins/) which is Rollup-compatible.
+This will generate the build output in the outfile.cjs file.
 
-## Migrating from Vue CLI
+### 4. Run the Project
 
-- [Vue CLI -> Vite Migration Guide from VueSchool.io](https://vueschool.io/articles/vuejs-tutorials/how-to-migrate-from-vue-cli-to-vite/)
+You can now use the built CLI by running the following command, replacing <path-to-build-file> with the actual path to the outfile.cjs file:
 
-- [Tools / Plugins that help with auto migration](https://github.com/vitejs/awesome-vite#vue-cli)
+```bash
+npx <path-to-build-file>
+```
+
+---
+
+## Contribution
+
+We welcome contributions to make this project better. Please use the following methods for discussions, reporting issues, and contributing code:
+
+### 1. Issues
+
+If you encounter any problems or have suggestions, please open an issue here.
+
+### 2. Discussions
+
+For broader discussions, questions, or feature requests, you can use the Discussions section.
+
+### 3. Pull Requests
+
+If you'd like to contribute code, please follow these steps:
+
+- Create a new branch for your changes: git checkout -b feature/your-feature-name.
+- Make your changes and commit them.
+- Push your changes to your branch.
+- Create a pull request (PR) from your branch to the main branch of this repository.
+
+Please ensure your code follows the existing code style and includes necessary tests if applicable.
+
+Thank you for contributing to the project!
