@@ -1,10 +1,10 @@
 {
-  "name": "vue-cli-bootstrap",
-  "version": "0.0.1",
+  "name": "vue-bootstrap-test999",
+  "version": "0.0.2",
   "description": "An easy way to start a Vue project",
   "type": "module",
   "bin": {
-    "vue-cli-bootstrap": "outfile.cjs"
+    "vue-bootstrap-test999": "outfile.cjs"
   },
   "files": [
     "outfile.cjs",
@@ -16,11 +16,7 @@
   "scripts": {
     "prepare": "husky install",
     "format": "prettier --write .",
-    "build": "zx ./scripts/build.mjs",
-    "snapshot": "zx ./scripts/snapshot.mjs",
-    "pretest": "run-s build snapshot",
-    "test": "zx ./scripts/test.mjs",
-    "prepublishOnly": "zx ./scripts/prepublish.mjs"
+    "build": "zx ./scripts/build.mjs"
   },
   "repository": {
     "type": "git",
