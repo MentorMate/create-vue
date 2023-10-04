@@ -1,4 +1,4 @@
-# Create Vue Fork
+# Create Vue Fork <a href="https://npmjs.com/package/create-vue"><img src="https://badgen.net/npm/v/create-vue" alt="npm package"></a> <a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/create-vue" alt="node compatibility"></a>
 
 TODO - Update github related stuff when transferred
 
