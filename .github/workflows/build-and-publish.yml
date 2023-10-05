@@ -1,3 +1,4 @@
+# https://docs.github.com/en/packages/quickstart
 on:
   push:
     branches: main
@@ -16,6 +17,6 @@ jobs:
       #   run: npm run build 
       - uses: JS-DevTools/npm-publish@v2
         with:
-          # token: ${{ secrets.NPM_TOKEN }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          registry: "https://npm.pkg.github.com"
+          token: ${{ secrets.NPM_TOKEN }}
+          # token: ${{ secrets.GITHUB_TOKEN }}
+          # registry: "https://npm.pkg.github.com"
