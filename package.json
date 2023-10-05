@@ -22,9 +22,6 @@
     "type": "git",
     "url": "git+https://github.com/YRamchev/vue-bootstrap.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "keywords": [],
   "author": "Haoqun Jiang <haoqunjiang+npm@gmail.com>",
   "license": "MIT",
