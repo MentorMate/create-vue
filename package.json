@@ -29,9 +29,9 @@
   "author": "Haoqun Jiang <haoqunjiang+npm@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vuejs/create-vue/issues"
+    "url": "https://github.com/YRamchev/vue-bootstrap/issues"
   },
-  "homepage": "https://github.com/vuejs/create-vue#readme",
+  "homepage": "https://github.com/YRamchev/vue-bootstrap#readme",
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",
     "@types/eslint": "^8.44.2",
