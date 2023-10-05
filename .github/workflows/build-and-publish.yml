@@ -14,9 +14,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build 
-      - uses: JS-DevTools/npm-publish@v2
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          # token: ${{ secrets.GITHUB_TOKEN }}
-          registry: "https://registry.npmjs.org/"
-
+      - name: Publish to npm
+        run: |
+          npm publish --registry https://registry.npmjs.org/
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
