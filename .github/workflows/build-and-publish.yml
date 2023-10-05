@@ -1,31 +1,17 @@
-name: Build and Publish
-
 on:
   push:
-    branches:
-      - main # Change this to the branch you want to trigger the workflow on
+    branches: main
 
 jobs:
-  build-and-publish:
+  publish:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build # Adjust this command to your build script
-
-      - name: Auth
-        run: npm adduser
-
-      - name: Publish
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}} # Make sure you have an npm token set in your repository secrets
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - run: npm ci
+      - run: npm build
+      - uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
