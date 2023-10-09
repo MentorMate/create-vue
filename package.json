@@ -1,10 +1,10 @@
 {
-  "name": "vue-bootstrap-test999",
-  "version": "0.0.3",
-  "description": "An easy way to start a Vue project",
+  "name": "@mentormate/create-vue",
+  "version": "0.0.4",
+  "description": "🛠️ Extended way to start a Vite-powered Vue project",
   "type": "module",
   "bin": {
-    "vue-bootstrap-test999": "outfile.cjs"
+    "create-vue": "outfile.cjs"
   },
   "files": [
     "outfile.cjs",
@@ -16,19 +16,23 @@
   "scripts": {
     "prepare": "husky install",
     "format": "prettier --write .",
-    "build": "zx ./scripts/build.mjs"
+    "build": "zx ./scripts/build.mjs",
+    "snapshot": "zx ./scripts/snapshot.mjs",
+    "pretest": "run-s build snapshot",
+    "test": "zx ./scripts/test.mjs",
+    "prepublishOnly": "zx ./scripts/prepublish.mjs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YRamchev/vue-bootstrap.git"
+    "url": "git+https://github.com/MentorMate/create-vue.git"
   },
   "keywords": [],
   "author": "Haoqun Jiang <haoqunjiang+npm@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/YRamchev/vue-bootstrap/issues"
+    "url": "https://github.com/MentorMate/create-vue/issues"
   },
-  "homepage": "https://github.com/YRamchev/vue-bootstrap#readme",
+  "homepage": "https://github.com/MentorMate/create-vue#readme",
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",
     "@types/eslint": "^8.44.2",
