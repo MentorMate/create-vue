@@ -1,72 +1,50 @@
-# Create Vue Fork
-<a href="https://npmjs.com/package/create-vue"><img src="https://badgen.net/npm/v/create-vue" alt="npm package"></a> <a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/create-vue" alt="node compatibility"></a>
+<h1>MentorMate/create-vue</h1>
+  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://github.com/MentorMate/create-vue/assets/69005114/bf84acf2-f265-40a6-b41d-c3277c6a0bb6" alt="MentorMate create-vue" width="550"></a>
 
+<p>
+  <a href="https://npmjs.com/package/create-vue"><img src="https://badgen.net/npm/v/create-vue" alt="npm package"></a> 
+  <a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/create-vue" alt="node compatibility"></a>
+</p>
+
+<p>
+  <a href="#key-features">Key Features</a> •
+  <a href="#contribute">Contribute</a> •
+  <a href="#other-cool-projects">Other cool projects</a> •
+  <a href="#license">License</a>
+</p>
+
+This is a clone of the <a href="https://github.com/vuejs/create-vue">create-vue</a>, where we are extending its existing functionality while keeping it up to date with the original repository. Feel free to contribute and help make this project even better!
+
+To run the project, just run the command in the terminal:
 ```bash
-npx vue-bootstrap-test999
+npx @mentormate/create-vue
 ```
 
-This is a fork of the <a href="https://github.com/vuejs/create-vue">create-vue</a>, where we are extending its existing functionality while keeping it up to date with the original repository. Feel free to contribute and help make this project even better!
+## Key Features
 
-## Getting Started
+* [x] All supported official create vue features
+* [x] SonarQube
+* [x] StoryBook
+* [x] VueUse
+* [ ] <a href="https://github.com/MentorMate/create-vue/issues/3">Husky</a>
+* [ ] <a href="https://github.com/MentorMate/create-vue/issues/1">i18n</a>
+* [ ] a11y
+* [ ] <a href="https://vitejs.dev/guide/features.html#css-pre-processors">css pre-processors</a>
+* Please submit an <a href="https://github.com/MentorMate/create-vue/issues">issue</a> if you would like to see other features to be supported
 
-Follow these steps to clone, build, and run the project:
+## Contribute
 
-### 1. Clone the Repository
+1. <a href="https://github.com/MentorMate/create-vue/wiki/Getting-Started">Getting Started</a>
+2. <a href="https://github.com/MentorMate/create-vue/wiki/Contribution">Contribution</a>
 
-```bash
-git clone https://github.com/your-username/vite-cli-bootstrap.git
-cd vite-cli-bootstrap
-```
 
-### 2. Install Dependencies
+## Other cool projects
 
-Make sure you have <a href="https://pnpm.io/">pnpm</a> installed, as we'll be using it for package management.
+- [Node.js CLI](https://github.com/MentorMate/node-project-cli)
+- [React Native CLI](https://github.com/MentorMate/rn-bootstrap)
 
-```bash
-pnpm install
-```
+## License
 
-### 3. Build the Project
+MIT
 
-To build the project, run the following command:
 
-```bash
-pnpm run build
-```
-
-This will generate the build output in the outfile.cjs file.
-
-### 4. Run the Project
-
-You can now use the built CLI by running the following command, replacing <path-to-build-file> with the actual path to the outfile.cjs file:
-
-```bash
-npx <path-to-build-file>
-```
-
----
-
-## Contribution
-
-We welcome contributions to make this project better. Please use the following methods for discussions, reporting issues, and contributing code:
-
-### 1. Issues
-
-If you encounter any problems or have suggestions, please open an issue here.
-
-### 2. Discussions
-
-For broader discussions, questions, or feature requests, you can use the Discussions section.
-
-### 3. Pull Requests
-
-If you'd like to contribute code, please follow these steps:
-
-- Create a new branch for your changes: git checkout -b feature/your-feature-name.
-- Make your changes and commit them.
-- Push your changes to your branch.
-- Create a pull request (PR) from your branch to the main branch of this repository.
-
-Please ensure your code follows the existing code style and includes necessary tests if applicable.
-
-Thank you for contributing to the project!
