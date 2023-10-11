@@ -110,6 +110,7 @@ async function init() {
       argv.playwright ??
       argv.eslint ??
       argv.storybook ??
+      argv.vueAxe ??
       argv.vueUse
     ) === 'boolean'
 
@@ -131,8 +132,9 @@ async function init() {
     needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
-    needsVueUse?: boolean
     needsStorybook?: boolean
+    needsVueAxe?: boolean
+    needsVueUse?: boolean
   } = {}
 
   try {
@@ -149,8 +151,9 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
-    // - Add VueUse - Collection of essential Composition Utilities?
     // - Add Storybook?
+    // - Add VueUse - Collection of essential Composition Utilities?
+    // - Add vue-axe - Accessibility auditing for Vue.js applications by running dequelabs/axe-core validation
     result = await prompts(
       [
         {
@@ -288,6 +291,14 @@ async function init() {
           inactive: 'No'
         },
         {
+          name: 'needsStorybook',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: 'Add Storybook?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
           name: 'needsVueUse',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add VueUse - Collection of essential Composition Utilities?',
@@ -296,9 +307,9 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'needsStorybook',
+          name: 'needsVueAxe',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Storybook?',
+          message: 'Add VueAxe - Accessibility auditing?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
@@ -330,7 +341,8 @@ async function init() {
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
     needsPrettier = argv['eslint-with-prettier'],
     needsVueUse = argv.vueUse,
-    needsStorybook = argv.storybook
+    needsStorybook = argv.storybook,
+    needsVueAxe = argv.vueAxe
   } = result
 
   const { needsE2eTesting } = result
@@ -431,6 +443,10 @@ async function init() {
     render('config/vueUse')
   }
 
+  if (needsVueAxe) {
+    render('config/vueAxe')
+  }
+
   // Render code template.
   // prettier-ignore
   const codeTemplate =
@@ -438,13 +454,20 @@ async function init() {
     (needsRouter ? 'router' : 'default')
   render(`code/${codeTemplate}`)
 
-  // Render entry file (main.js/ts).
-  if (needsPinia && needsRouter) {
+  if (needsVueAxe && needsPinia && needsRouter) {
+    render('entry/vueAxe-router-and-pinia')
+  } else if (needsVueAxe && needsPinia) {
+    render('entry/vueAxe-pinia')
+  } else if (needsVueAxe && needsRouter) {
+    render('entry/vueAxe-router')
+  } else if (needsPinia && needsRouter) {
     render('entry/router-and-pinia')
   } else if (needsPinia) {
     render('entry/pinia')
   } else if (needsRouter) {
     render('entry/router')
+  } else if (needsVueAxe) {
+    render('entry/vueAxe')
   } else {
     render('entry/default')
   }
