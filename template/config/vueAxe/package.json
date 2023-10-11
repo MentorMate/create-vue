@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "vue-axe": "2.0.0",
+    "axe-core": "^4.8.2"
+  }
+}
