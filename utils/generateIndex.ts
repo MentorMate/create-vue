@@ -1,4 +1,4 @@
-export default function generateIndex({ needsPinia, needsRouter, needsVueAxe, needsI18n }) {
+export default function generateIndex({ needsPinia, needsRouter, needsI18n }) {
   let indexFile = `
 import './assets/main.css'
 import { createApp } from 'vue'`
