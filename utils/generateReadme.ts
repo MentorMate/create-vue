@@ -1,4 +1,4 @@
-import getCommand from './getCommand'
+import getCommand from './getCommand.js'
 
 const sfcTypeSupportDoc = [
   '',

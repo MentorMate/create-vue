@@ -14,6 +14,7 @@ import * as banners from './utils/banners.js'
 import renderTemplate from './utils/renderTemplate.js'
 import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse.js'
 import generateReadme from './utils/generateReadme.js'
+import generateIndex from './utils/generateIndex.js'
 import getCommand from './utils/getCommand.js'
 import renderEslint from './utils/renderEslint.js'
 import { FILES_TO_FILTER } from './utils/filterList.js'
@@ -110,7 +111,8 @@ async function init() {
       argv.playwright ??
       argv.eslint ??
       argv.storybook ??
-      argv.vueUse
+      argv.vueUse ??
+      argv.i18n
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -131,8 +133,9 @@ async function init() {
     needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
-    needsVueUse?: boolean
     needsStorybook?: boolean
+    needsVueUse?: boolean
+    needsI18n?: boolean
   } = {}
 
   try {
@@ -149,8 +152,9 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
-    // - Add VueUse - Collection of essential Composition Utilities?
     // - Add Storybook?
+    // - Add VueUse - Collection of essential Composition Utilities?
+    // - Add vue-i18n
     result = await prompts(
       [
         {
@@ -288,6 +292,14 @@ async function init() {
           inactive: 'No'
         },
         {
+          name: 'needsStorybook',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: 'Add Storybook?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
           name: 'needsVueUse',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add VueUse - Collection of essential Composition Utilities?',
@@ -296,9 +308,9 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'needsStorybook',
+          name: 'needsI18n',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Storybook?',
+          message: 'Add i18n - internationalization plugin?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
@@ -330,7 +342,8 @@ async function init() {
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
     needsPrettier = argv['eslint-with-prettier'],
     needsVueUse = argv.vueUse,
-    needsStorybook = argv.storybook
+    needsStorybook = argv.storybook,
+    needsI18n = argv.i18n
   } = result
 
   const { needsE2eTesting } = result
@@ -431,6 +444,10 @@ async function init() {
     render('config/vueUse')
   }
 
+  if (needsI18n) {
+    render('config/i18n')
+  }
+
   // Render code template.
   // prettier-ignore
   const codeTemplate =
@@ -438,16 +455,24 @@ async function init() {
     (needsRouter ? 'router' : 'default')
   render(`code/${codeTemplate}`)
 
-  // Render entry file (main.js/ts).
-  if (needsPinia && needsRouter) {
-    render('entry/router-and-pinia')
-  } else if (needsPinia) {
-    render('entry/pinia')
-  } else if (needsRouter) {
-    render('entry/router')
-  } else {
-    render('entry/default')
-  }
+  // main.js generation
+  fs.writeFileSync(
+    path.resolve(`${root}/src`, 'main.js'),
+    generateIndex({
+      needsPinia,
+      needsRouter,
+      needsI18n
+    })
+  )
+  // if (needsPinia && needsRouter) {
+  //   render('entry/router-and-pinia')
+  // } else if (needsPinia) {
+  //   render('entry/pinia')
+  // } else if (needsRouter) {
+  //   render('entry/router')
+  // } else {
+  //   render('entry/default')
+  // }
 
   // An external data store for callbacks to share data
   const dataStore = {}
