@@ -1,4 +1,5 @@
 #!/usr/bin/env zx
+import fs from 'node:fs'
 import 'zx/globals'
 
 $.verbose = false
