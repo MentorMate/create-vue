@@ -14,6 +14,7 @@ import * as banners from './utils/banners.js'
 import renderTemplate from './utils/renderTemplate.js'
 import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse.js'
 import generateReadme from './utils/generateReadme.js'
+import generateIndex from './utils/generateIndex.js'
 import getCommand from './utils/getCommand.js'
 import renderEslint from './utils/renderEslint.js'
 import { FILES_TO_FILTER } from './utils/filterList.js'
@@ -110,8 +111,8 @@ async function init() {
       argv.playwright ??
       argv.eslint ??
       argv.storybook ??
-      argv.vueAxe ??
-      argv.vueUse
+      argv.vueUse ??
+      argv.i18n
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -133,8 +134,8 @@ async function init() {
     needsEslint?: boolean
     needsPrettier?: boolean
     needsStorybook?: boolean
-    needsVueAxe?: boolean
     needsVueUse?: boolean
+    needsI18n?: boolean
   } = {}
 
   try {
@@ -153,7 +154,7 @@ async function init() {
     // - Add Prettier for code formatting?
     // - Add Storybook?
     // - Add VueUse - Collection of essential Composition Utilities?
-    // - Add vue-axe - Accessibility auditing for Vue.js applications by running dequelabs/axe-core validation
+    // - Add vue-i18n
     result = await prompts(
       [
         {
@@ -307,9 +308,9 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'needsVueAxe',
+          name: 'needsI18n',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add VueAxe - Accessibility auditing?',
+          message: 'Add i18n - internationalization plugin?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
@@ -342,7 +343,7 @@ async function init() {
     needsPrettier = argv['eslint-with-prettier'],
     needsVueUse = argv.vueUse,
     needsStorybook = argv.storybook,
-    needsVueAxe = argv.vueAxe
+    needsI18n = argv.i18n
   } = result
 
   const { needsE2eTesting } = result
@@ -443,8 +444,8 @@ async function init() {
     render('config/vueUse')
   }
 
-  if (needsVueAxe) {
-    render('config/vueAxe')
+  if (needsI18n) {
+    render('config/i18n')
   }
 
   // Render code template.
@@ -454,23 +455,24 @@ async function init() {
     (needsRouter ? 'router' : 'default')
   render(`code/${codeTemplate}`)
 
-  if (needsVueAxe && needsPinia && needsRouter) {
-    render('entry/vueAxe-router-and-pinia')
-  } else if (needsVueAxe && needsPinia) {
-    render('entry/vueAxe-pinia')
-  } else if (needsVueAxe && needsRouter) {
-    render('entry/vueAxe-router')
-  } else if (needsPinia && needsRouter) {
-    render('entry/router-and-pinia')
-  } else if (needsPinia) {
-    render('entry/pinia')
-  } else if (needsRouter) {
-    render('entry/router')
-  } else if (needsVueAxe) {
-    render('entry/vueAxe')
-  } else {
-    render('entry/default')
-  }
+  // index.js generation
+  fs.writeFileSync(
+    path.resolve(`${root}/src`, 'main.js'),
+    generateIndex({
+      needsPinia,
+      needsRouter,
+      needsI18n
+    })
+  )
+  // if (needsPinia && needsRouter) {
+  //   render('entry/router-and-pinia')
+  // } else if (needsPinia) {
+  //   render('entry/pinia')
+  // } else if (needsRouter) {
+  //   render('entry/router')
+  // } else {
+  //   render('entry/default')
+  // }
 
   // An external data store for callbacks to share data
   const dataStore = {}
