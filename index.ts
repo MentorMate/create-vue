@@ -455,7 +455,7 @@ async function init() {
     (needsRouter ? 'router' : 'default')
   render(`code/${codeTemplate}`)
 
-  // index.js generation
+  // main.js generation
   fs.writeFileSync(
     path.resolve(`${root}/src`, 'main.js'),
     generateIndex({
