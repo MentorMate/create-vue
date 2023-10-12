@@ -464,15 +464,6 @@ async function init() {
       needsI18n
     })
   )
-  // if (needsPinia && needsRouter) {
-  //   render('entry/router-and-pinia')
-  // } else if (needsPinia) {
-  //   render('entry/pinia')
-  // } else if (needsRouter) {
-  //   render('entry/router')
-  // } else {
-  //   render('entry/default')
-  // }
 
   // An external data store for callbacks to share data
   const dataStore = {}
