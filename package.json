@@ -20,8 +20,7 @@
     "snapshot": "zx ./scripts/snapshot.mjs",
     "pretest": "run-s build snapshot",
     "test": "zx ./scripts/test.mjs",
-    "prepublishOnly": "zx ./scripts/prepublish.mjs",
-    "cm": "cz"
+    "prepublishOnly": "zx ./scripts/prepublish.mjs"
   },
   "repository": {
     "type": "git",
