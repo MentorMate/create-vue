@@ -22,17 +22,16 @@ npx @mentormate/create-vue
 
 ## Key Features
 
-* [x] All supported official create vue features
-* [x] SonarQube
-* [x] StoryBook
-* [x] VueUse
+* [x] All supported official create-vue features
+* [x] VueUse - Collection of Essential Vue Composition Utilities (https://vueuse.org/)
+* [x] Vue I18n - Internationalization plugin for Vue.js (https://vue-i18n.intlify.dev/)
+* [x] StoryBook - Frontend workshop for building UI components and pages in isolation (https://storybook.js.org/)
+* [x] SonarQube - The code quality tool for better code (https://www.sonarsource.com/products/sonarqube/)
 * [ ] <a href="https://github.com/MentorMate/create-vue/issues/3">Husky</a>
-* [ ] <a href="https://github.com/MentorMate/create-vue/issues/1">i18n</a>
-* [ ] a11y
-* [ ] <a href="https://vitejs.dev/guide/features.html#css-pre-processors">css pre-processors</a>
+* [ ] <a href="https://vitejs.dev/guide/features.html#css-pre-processors">CSS pre-processors</a>
 * Please submit an <a href="https://github.com/MentorMate/create-vue/issues">issue</a> if you would like to see other features to be supported
 
-## Contribute
+## Contribution
 
 1. <a href="https://github.com/MentorMate/create-vue/wiki/Getting-Started">Getting Started</a>
 2. <a href="https://github.com/MentorMate/create-vue/wiki/Contribution">Contribution</a>
@@ -46,5 +45,3 @@ npx @mentormate/create-vue
 ## License
 
 MIT
-
-
