@@ -1,10 +1,10 @@
 <h1>MentorMate/create-vue</h1>
-  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://github.com/MentorMate/create-vue/assets/69005114/bf84acf2-f265-40a6-b41d-c3277c6a0bb6" alt="MentorMate create-vue" width="550"></a>
-
 <p>
   <a href="https://npmjs.com/package/create-vue"><img src="https://badgen.net/npm/v/create-vue" alt="npm package"></a> 
   <a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/create-vue" alt="node compatibility"></a>
 </p>
+
+<a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://github.com/MentorMate/create-vue/assets/69005114/bf84acf2-f265-40a6-b41d-c3277c6a0bb6" alt="MentorMate create-vue" width="550"></a>
 
 <p>
   <a href="#key-features">Key Features</a> •
@@ -27,7 +27,7 @@ npx @mentormate/create-vue
 * [x] Vue I18n - Internationalization plugin for Vue.js (https://vue-i18n.intlify.dev/)
 * [x] StoryBook - Frontend workshop for building UI components and pages in isolation (https://storybook.js.org/)
 * [x] SonarQube - The code quality tool for better code (https://www.sonarsource.com/products/sonarqube/)
-* [ ] <a href="https://github.com/MentorMate/create-vue/issues/3">Husky</a>
+* [ ] <a href="https://github.com/MentorMate/create-vue/issues/3">Husky</a> - Modern native git hooks made easy (https://typicode.github.io/husky/)
 * [ ] <a href="https://vitejs.dev/guide/features.html#css-pre-processors">CSS pre-processors</a>
 * Please submit an <a href="https://github.com/MentorMate/create-vue/issues">issue</a> if you would like to see other features to be supported
 
