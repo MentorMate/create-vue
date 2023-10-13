@@ -105,14 +105,15 @@ async function init() {
       argv.pinia ??
       argv.tests ??
       argv.vitest ??
-      argv.sonarQube ??
       argv.cypress ??
       argv.nightwatch ??
       argv.playwright ??
       argv.eslint ??
-      argv.storybook ??
       argv.vueUse ??
-      argv.i18n
+      argv.i18n ??
+      argv.storybook ??
+      argv.sonarQube ??
+      argv.husky
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -129,13 +130,14 @@ async function init() {
     needsRouter?: boolean
     needsPinia?: boolean
     needsVitest?: boolean
-    needsSonarQube?: boolean
     needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
     needsEslint?: boolean
     needsPrettier?: boolean
-    needsStorybook?: boolean
     needsVueUse?: boolean
     needsI18n?: boolean
+    needsHusky?: boolean
+    needsStorybook?: boolean
+    needsSonarQube?: boolean
   } = {}
 
   try {
@@ -152,9 +154,11 @@ async function init() {
     // - Add Playwright for end-to-end testing?
     // - Add ESLint for code quality?
     // - Add Prettier for code formatting?
-    // - Add Storybook?
     // - Add VueUse - Collection of essential Composition Utilities?
-    // - Add vue-i18n
+    // - Add i18n - internationalization plugin?
+    // - Add Husky - Modern native git hooks made easy?
+    // - Add Storybook?
+    // - Add SonarQube for code coverage?
     result = await prompts(
       [
         {
@@ -231,19 +235,6 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'needsSonarQube',
-          type: (prev, values) => {
-            if (isFeatureFlagsUsed || !values.needsVitest) {
-              return null
-            }
-            return 'toggle'
-          },
-          message: 'Add SonarQube for code coverage?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
           name: 'needsE2eTesting',
           type: () => (isFeatureFlagsUsed ? null : 'select'),
           message: 'Add an End-to-End Testing Solution?',
@@ -292,14 +283,6 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'needsStorybook',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Storybook?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
           name: 'needsVueUse',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add VueUse - Collection of essential Composition Utilities?',
@@ -311,6 +294,35 @@ async function init() {
           name: 'needsI18n',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add i18n - internationalization plugin?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
+          name: 'needsHusky',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: 'Add Husky - Modern native git hooks made easy?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
+          name: 'needsStorybook',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: 'Add Storybook?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
+        },
+        {
+          name: 'needsSonarQube',
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed || !values.needsVitest) {
+              return null
+            }
+            return 'toggle'
+          },
+          message: 'Add SonarQube for code coverage?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
@@ -338,12 +350,13 @@ async function init() {
     needsRouter = argv.router,
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
-    needsSonarQube = argv.SneedsSonarQube,
     needsEslint = argv.eslint || argv['eslint-with-prettier'],
     needsPrettier = argv['eslint-with-prettier'],
     needsVueUse = argv.vueUse,
+    needsI18n = argv.i18n,
+    needsHusky = argv.husky,
     needsStorybook = argv.storybook,
-    needsI18n = argv.i18n
+    needsSonarQube = argv.SneedsSonarQube
   } = result
 
   const { needsE2eTesting } = result
@@ -392,9 +405,6 @@ async function init() {
   if (needsVitest) {
     render('config/vitest')
   }
-  if (needsSonarQube) {
-    render('config/sonarQube')
-  }
   if (needsCypress) {
     render('config/cypress')
   }
@@ -439,13 +449,14 @@ async function init() {
   if (needsEslint) {
     renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
   }
-
   if (needsVueUse) {
     render('config/vueUse')
   }
-
   if (needsI18n) {
     render('config/i18n')
+  }
+  if (needsSonarQube) {
+    render('config/sonarQube')
   }
 
   // Render code template.
@@ -555,7 +566,11 @@ async function init() {
       needsPlaywright,
       needsNightwatchCT,
       needsCypressCT,
-      needsEslint
+      needsEslint,
+      needsVueUse,
+      needsI18n,
+      needsSonarQube,
+      needsHusky
     })
   )
 

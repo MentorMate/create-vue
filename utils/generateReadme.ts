@@ -25,7 +25,11 @@ export default function generateReadme({
   needsNightwatchCT,
   needsPlaywright,
   needsVitest,
-  needsEslint
+  needsEslint,
+  needsVueUse,
+  needsI18n,
+  needsSonarQube,
+  needsHusky
 }) {
   const commandFor = (scriptName: string, args?: string) =>
     getCommand(packageManager, scriptName, args)
@@ -167,7 +171,31 @@ ${commandFor('lint')}
 `
   }
 
-  readme += npmScriptsDescriptions
+  if (needsVueUse) {
+    npmScriptsDescriptions += `
+### VueUse - collection of utility functions based on Composition API.(https://vueuse.org/guide/)
+`
+  }
+
+  if (needsI18n) {
+    npmScriptsDescriptions += `
+### Vue I18n Internationalization plugin for Vue.js (https://vue-i18n.intlify.dev/)
+`
+  }
+
+  if (needsSonarQube) {
+    npmScriptsDescriptions += `
+### SonarQube - Clean code for teams and enterprises (https://www.sonarsource.com/products/sonarqube/)
+`
+  }
+
+  if (needsHusky) {
+    npmScriptsDescriptions += `
+### Husky - modern native git hooks made easy (https://typicode.github.io/husky/)
+`
+  }
+
+  https: readme += npmScriptsDescriptions
 
   return readme
 }
