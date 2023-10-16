@@ -36,6 +36,7 @@ npx @mentormate/create-vue
 
 1. <a href="https://github.com/MentorMate/create-vue/wiki/Getting-Started">Getting Started</a>
 2. <a href="https://github.com/MentorMate/create-vue/wiki/Contribution">Contribution</a>
+3. <a href="https://github.com/MentorMate/create-vue/wiki/Contribution">Publish package</a>
 
 
 ## Other cool projects
