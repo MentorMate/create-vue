@@ -34,12 +34,16 @@
   },
   "homepage": "https://github.com/MentorMate/create-vue#readme",
   "devDependencies": {
+    "@commitlint/cli": "^17.7.2",
+    "@commitlint/config-conventional": "^17.7.0",
     "@tsconfig/node18": "^18.2.2",
     "@types/eslint": "^8.44.4",
     "@types/node": "^18.18.4",
     "@types/prompts": "^2.4.6",
     "@vue/create-eslint-config": "^0.3.2",
     "@vue/tsconfig": "^0.4.0",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "ejs": "^3.1.9",
     "esbuild": "^0.18.20",
     "esbuild-plugin-license": "^1.2.2",
@@ -56,5 +60,10 @@
     "*.{js,ts,vue,json}": [
       "prettier --write"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

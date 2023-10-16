@@ -2,6 +2,7 @@
 <p>
   <a href="https://npmjs.com/package/create-vue"><img src="https://badgen.net/npm/v/create-vue" alt="npm package"></a> 
   <a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/create-vue" alt="node compatibility"></a>
+  [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 </p>
 
 <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://github.com/MentorMate/create-vue/assets/69005114/bf84acf2-f265-40a6-b41d-c3277c6a0bb6" alt="MentorMate create-vue" width="550"></a>
