@@ -300,7 +300,12 @@ async function init() {
         },
         {
           name: 'needsHusky',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed || !values.needsEslint) {
+              return null
+            }
+            return 'toggle'
+          },
           message: 'Add Husky - Modern native git hooks made easy?',
           initial: false,
           active: 'Yes',
@@ -458,6 +463,9 @@ async function init() {
   if (needsSonarQube) {
     render('config/sonarQube')
   }
+  if (needsHusky) {
+    render('config/husky')
+  }
 
   // Render code template.
   // prettier-ignore
@@ -591,6 +599,12 @@ async function init() {
   if (needsSonarQube) {
     console.log(`  ${bold(yellow('Do not forget to update sonar-project.properties'))}`)
   }
+  // I dont think this is needed, package is installed through package.json
+  // if (needsHusky) {
+  //   // check flag for different package managers
+  //   console.log(`  ${bold(green(getCommand(packageManager, 'husky --save-dev')))}`)
+  //   console.log(`  ${bold(green(`npx husky install`))}`)
+  // }
   console.log(`  ${bold(green(getCommand(packageManager, 'dev')))}`)
   console.log()
 }
