@@ -1,0 +1,22 @@
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+name: Publish Package to npmjs
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .npmrc
+        run: echo "//registry.npmjs.org/:_authToken=\${NODE_AUTH_TOKEN}\nregistry=https://registry.npmjs.org/\n@mentormate:registry=https://registry.npmjs.org/" > ~/.npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm ci
+      - run: npm run build
+      - run: npm publish
