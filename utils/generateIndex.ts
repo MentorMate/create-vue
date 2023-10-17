@@ -49,27 +49,25 @@ const i18n = createI18n({
       linked: '@:dio @:the_world'
     }
   }
-})`
+})
+`
   }
 
-  indexFile += `
-const app = createApp(App)`
+  indexFile += `const app = createApp(App)
+`
 
   if (needsPinia) {
-    indexFile += `
-app.use(createPinia())
+    indexFile += `app.use(createPinia())
 `
   }
 
   if (needsRouter) {
-    indexFile += `
-app.use(router)
+    indexFile += `app.use(router)
 `
   }
 
   if (needsI18n) {
-    indexFile += `
-app.use(i18n)
+    indexFile += `app.use(i18n)
 `
   }
 
