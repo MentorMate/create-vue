@@ -17,12 +17,6 @@ jobs:
       - run: npm ci
       - name: Build
         run: npm run build
-      
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps: 
       - name: Publish
         run: npm publish --access public
         env:
