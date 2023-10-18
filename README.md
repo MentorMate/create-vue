@@ -28,7 +28,7 @@ npx @mentormate/create-vue
 * [x] Vue I18n - Internationalization plugin for Vue.js (https://vue-i18n.intlify.dev/)
 * [x] StoryBook - Frontend workshop for building UI components and pages in isolation (https://storybook.js.org/)
 * [x] SonarQube - The code quality tool for better code (https://www.sonarsource.com/products/sonarqube/)
-* [ ] <a href="https://github.com/MentorMate/create-vue/issues/3">Husky</a> - Modern native git hooks made easy (https://typicode.github.io/husky/)
+* [x] Husky - Modern native git hooks made easy (https://typicode.github.io/husky/)
 * [ ] <a href="https://vitejs.dev/guide/features.html#css-pre-processors">CSS pre-processors</a>
 * Please submit an <a href="https://github.com/MentorMate/create-vue/issues">issue</a> if you would like to see other features to be supported
 
