@@ -4,7 +4,7 @@
   <a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/create-vue" alt="node compatibility"></a>
   <a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" alt="Commitizen friendly"></a>
   <a href="https://github.com/MentorMate/create-vue/actions/workflows/github-code-scanning/codeql"><img src="https://github.com/MentorMate/create-vue/actions/workflows/github-code-scanning/codeql/badge.svg" alt="CodeQL friendly"></a>
-  <a href="https://github.com/MentorMate/create-vue/actions/workflows/npm-publish-package.yml"><img src="ttps://github.com/MentorMate/create-vue/actions/workflows/npm-publish-package.yml/badge.svg?branch=main" alt="Publish Package"></a>
+  <a href="https://github.com/MentorMate/create-vue/actions/workflows/npm-publish-package.yml"><img src="https://github.com/MentorMate/create-vue/actions/workflows/npm-publish-package.yml/badge.svg?branch=main" alt="Publish Package"></a>
 </p>
 
 <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://github.com/MentorMate/create-vue/assets/69005114/bf84acf2-f265-40a6-b41d-c3277c6a0bb6" alt="MentorMate create-vue" width="550"></a>
