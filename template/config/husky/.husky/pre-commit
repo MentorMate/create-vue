@@ -1,5 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# check correct command
-yarn format && yarn lint
+npm run lint

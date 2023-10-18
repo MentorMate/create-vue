@@ -453,6 +453,9 @@ async function init() {
   // Render ESLint config
   if (needsEslint) {
     renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
+    if (needsHusky) {
+      render('config/husky')
+    }
   }
   if (needsVueUse) {
     render('config/vueUse')
@@ -463,10 +466,6 @@ async function init() {
   if (needsSonarQube) {
     render('config/sonarQube')
   }
-  if (needsHusky) {
-    render('config/husky')
-  }
-
   // Render code template.
   // prettier-ignore
   const codeTemplate =
@@ -589,6 +588,8 @@ async function init() {
       `  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`
     )
   }
+  console.log(`  ${bold(yellow('In order to use husky you need to initialize git'))}`)
+  console.log(`  ${bold(green('git init'))}`)
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
   if (needsPrettier) {
     console.log(`  ${bold(green(getCommand(packageManager, 'format')))}`)
@@ -599,12 +600,6 @@ async function init() {
   if (needsSonarQube) {
     console.log(`  ${bold(yellow('Do not forget to update sonar-project.properties'))}`)
   }
-  // I dont think this is needed, package is installed through package.json
-  // if (needsHusky) {
-  //   // check flag for different package managers
-  //   console.log(`  ${bold(green(getCommand(packageManager, 'husky --save-dev')))}`)
-  //   console.log(`  ${bold(green(`npx husky install`))}`)
-  // }
   console.log(`  ${bold(green(getCommand(packageManager, 'dev')))}`)
   console.log()
 }
