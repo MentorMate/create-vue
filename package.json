@@ -4,7 +4,7 @@
   "description": "🛠️ Extended way to start a Vite-powered Vue project",
   "type": "module",
   "bin": {
-    "create-vue": "outfile.cjs"
+    "@mentormate/create-vue": "outfile.cjs"
   },
   "files": [
     "outfile.cjs",

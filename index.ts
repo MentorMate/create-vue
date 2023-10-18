@@ -300,7 +300,12 @@ async function init() {
         },
         {
           name: 'needsHusky',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed || !values.needsEslint) {
+              return null
+            }
+            return 'toggle'
+          },
           message: 'Add Husky - Modern native git hooks made easy?',
           initial: false,
           active: 'Yes',
@@ -448,6 +453,9 @@ async function init() {
   // Render ESLint config
   if (needsEslint) {
     renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
+    if (needsHusky) {
+      render('config/husky')
+    }
   }
   if (needsVueUse) {
     render('config/vueUse')
@@ -458,7 +466,6 @@ async function init() {
   if (needsSonarQube) {
     render('config/sonarQube')
   }
-
   // Render code template.
   // prettier-ignore
   const codeTemplate =
@@ -581,6 +588,8 @@ async function init() {
       `  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`
     )
   }
+  console.log(`  ${bold(yellow('In order to use husky you need to initialize git'))}`)
+  console.log(`  ${bold(green('git init'))}`)
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
   if (needsPrettier) {
     console.log(`  ${bold(green(getCommand(packageManager, 'format')))}`)
