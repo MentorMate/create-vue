@@ -18,9 +18,7 @@
     "prepare": "husky install",
     "format": "prettier --write .",
     "build": "zx ./scripts/build.mjs",
-    "snapshot": "zx ./scripts/snapshot.mjs",
-    "pretest": "run-s build snapshot",
-    "test": "zx ./scripts/test.mjs"
+    "snapshot": "zx ./scripts/snapshot.mjs"
   },
   "repository": {
     "type": "git",
