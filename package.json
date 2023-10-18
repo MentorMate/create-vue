@@ -1,6 +1,6 @@
 {
   "name": "@mentormate/create-vue",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "🛠️ Extended way to start a Vite-powered Vue project",
   "type": "module",
   "bin": {
@@ -22,10 +22,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MentorMate/create-vue.git"
+    "url": "https://github.com/MentorMate/create-vue.git"
   },
-  "keywords": [],
-  "author": "Haoqun Jiang <haoqunjiang+npm@gmail.com>",
+  "keywords": [
+    "Extended Vue CLI",
+    "Vuejs",
+    "Custom CLI",
+    "Vue Template",
+    "Vite"
+  ],
+  "author": "MentorMate",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/MentorMate/create-vue/issues"
