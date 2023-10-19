@@ -32,6 +32,16 @@
     "Vite"
   ],
   "author": "MentorMate",
+  "contributors": [
+    {
+      "name": "Yordan Ramchev",
+      "email": "yordan.ramchev@mentormate.com"
+    },
+    {
+      "name": "Georgi Mateev",
+      "email": "georgi.mateev@mentormate.com"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/MentorMate/create-vue/issues"
