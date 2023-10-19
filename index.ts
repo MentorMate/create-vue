@@ -9,15 +9,15 @@ import { red, green, bold, yellow } from 'kolorist'
 
 import ejs from 'ejs'
 
-import * as banners from './utils/banners.js'
+import * as banners from './utils/banners'
 
-import renderTemplate from './utils/renderTemplate.js'
-import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse.js'
-import generateReadme from './utils/generateReadme.js'
-import generateIndex from './utils/generateIndex.js'
-import getCommand from './utils/getCommand.js'
-import renderEslint from './utils/renderEslint.js'
-import { FILES_TO_FILTER } from './utils/filterList.js'
+import renderTemplate from './utils/renderTemplate'
+import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse'
+import generateReadme from './utils/generateReadme'
+import generateIndex from './utils/generateIndex'
+import getCommand from './utils/getCommand'
+import renderEslint from './utils/renderEslint'
+import { FILES_TO_FILTER } from './utils/filterList'
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName)
