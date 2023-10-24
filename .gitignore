@@ -106,9 +106,3 @@ dist
 
 # TernJS port file
 .tern-port
-
-# Custom
-playground
-
-pnp-lock.yaml
-pnpm-workspace.yaml
