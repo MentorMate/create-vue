@@ -68,7 +68,8 @@
     "npm-run-all2": "^6.1.1",
     "prettier": "^3.0.3",
     "prompts": "^2.4.2",
-    "zx": "^7.2.3"
+    "zx": "^7.2.3",
+    "chokidar-cli": "^3.0.0"
   },
   "lint-staged": {
     "*.{js,ts,vue,json}": [
@@ -79,8 +80,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "dependencies": {
-    "chokidar-cli": "^3.0.0"
   }
 }
