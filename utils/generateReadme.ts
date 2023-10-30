@@ -25,11 +25,9 @@ export default function generateReadme({
   needsNightwatchCT,
   needsPlaywright,
   needsVitest,
-  needsEslint,
   needsVueUse,
   needsI18n,
-  needsSonarQube,
-  needsHusky
+  needsSonarQube
 }) {
   const commandFor = (scriptName: string, args?: string) =>
     getCommand(packageManager, scriptName, args)
@@ -161,15 +159,13 @@ ${commandFor('test:e2e', '--debug')}
 `
   }
 
-  if (needsEslint) {
-    npmScriptsDescriptions += `
+  npmScriptsDescriptions += `
 ### Lint with [ESLint](https://eslint.org/)
 
 \`\`\`sh
 ${commandFor('lint')}
 \`\`\`
 `
-  }
 
   if (needsVueUse) {
     npmScriptsDescriptions += `
@@ -189,11 +185,9 @@ ${commandFor('lint')}
 `
   }
 
-  if (needsHusky) {
-    npmScriptsDescriptions += `
+  npmScriptsDescriptions += `
 ### Husky - modern native git hooks made easy (https://typicode.github.io/husky/)
 `
-  }
 
   https: readme += npmScriptsDescriptions
 

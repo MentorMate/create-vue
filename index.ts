@@ -528,10 +528,7 @@ async function init() {
       needsCypressCT,
       needsVueUse,
       needsI18n,
-      needsSonarQube,
-      // Added by default
-      needsEslint: true,
-      needsHusky: true
+      needsSonarQube
     })
   )
 
