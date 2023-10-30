@@ -81,8 +81,6 @@ async function init() {
   // --cypress
   // --nightwatch
   // --playwright
-  // --eslint
-  // --eslint-with-prettier (only support prettier through eslint for simplicity)
   // --force (for force overwriting)
   const argv = minimist(process.argv.slice(2), {
     alias: {
@@ -108,12 +106,10 @@ async function init() {
       argv.cypress ??
       argv.nightwatch ??
       argv.playwright ??
-      argv.eslint ??
       argv.vueUse ??
       argv.i18n ??
       argv.storybook ??
-      argv.sonarQube ??
-      argv.husky
+      argv.sonarQube
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -130,12 +126,9 @@ async function init() {
     needsRouter?: boolean
     needsPinia?: boolean
     needsVitest?: boolean
-    needsE2eTesting?: false | 'cypress' | 'nightwatch' | 'playwright'
-    needsEslint?: boolean
-    needsPrettier?: boolean
+    needsE2eTesting?: false | 'playwright' | 'nightwatch' | 'cypress'
     needsVueUse?: boolean
     needsI18n?: boolean
-    needsHusky?: boolean
     needsStorybook?: boolean
     needsSonarQube?: boolean
   } = {}
@@ -152,11 +145,8 @@ async function init() {
     // - Add Cypress for testing?
     // - Add Nightwatch for testing?
     // - Add Playwright for end-to-end testing?
-    // - Add ESLint for code quality?
-    // - Add Prettier for code formatting?
     // - Add VueUse - Collection of essential Composition Utilities?
     // - Add i18n - internationalization plugin?
-    // - Add Husky - Modern native git hooks made easy?
     // - Add Storybook?
     // - Add SonarQube for code coverage?
     result = await prompts(
@@ -242,11 +232,8 @@ async function init() {
           choices: (prev, answers) => [
             { title: 'No', value: false },
             {
-              title: 'Cypress',
-              description: answers.needsVitest
-                ? undefined
-                : 'also supports unit testing with Cypress Component Testing',
-              value: 'cypress'
+              title: 'Playwright',
+              value: 'playwright'
             },
             {
               title: 'Nightwatch',
@@ -256,31 +243,13 @@ async function init() {
               value: 'nightwatch'
             },
             {
-              title: 'Playwright',
-              value: 'playwright'
+              title: 'Cypress',
+              description: answers.needsVitest
+                ? undefined
+                : 'also supports unit testing with Cypress Component Testing',
+              value: 'cypress'
             }
           ]
-        },
-        {
-          name: 'needsEslint',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add ESLint for code quality?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
-          name: 'needsPrettier',
-          type: (prev, values) => {
-            if (isFeatureFlagsUsed || !values.needsEslint) {
-              return null
-            }
-            return 'toggle'
-          },
-          message: 'Add Prettier for code formatting?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
         },
         {
           name: 'needsVueUse',
@@ -294,19 +263,6 @@ async function init() {
           name: 'needsI18n',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add i18n - internationalization plugin?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
-          name: 'needsHusky',
-          type: (prev, values) => {
-            if (isFeatureFlagsUsed || !values.needsEslint) {
-              return null
-            }
-            return 'toggle'
-          },
-          message: 'Add Husky - Modern native git hooks made easy?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
@@ -355,11 +311,8 @@ async function init() {
     needsRouter = argv.router,
     needsPinia = argv.pinia,
     needsVitest = argv.vitest || argv.tests,
-    needsEslint = argv.eslint || argv['eslint-with-prettier'],
-    needsPrettier = argv['eslint-with-prettier'],
     needsVueUse = argv.vueUse,
     needsI18n = argv.i18n,
-    needsHusky = argv.husky,
     needsStorybook = argv.storybook,
     needsSonarQube = argv.SneedsSonarQube
   } = result
@@ -410,11 +363,8 @@ async function init() {
   if (needsVitest) {
     render('config/vitest')
   }
-  if (needsCypress) {
-    render('config/cypress')
-  }
-  if (needsCypressCT) {
-    render('config/cypress-ct')
+  if (needsPlaywright) {
+    render('config/playwright')
   }
   if (needsNightwatch) {
     render('config/nightwatch')
@@ -422,9 +372,13 @@ async function init() {
   if (needsNightwatchCT) {
     render('config/nightwatch-ct')
   }
-  if (needsPlaywright) {
-    render('config/playwright')
+  if (needsCypress) {
+    render('config/cypress')
   }
+  if (needsCypressCT) {
+    render('config/cypress-ct')
+  }
+
   if (needsTypeScript) {
     render('config/typescript')
 
@@ -450,13 +404,6 @@ async function init() {
     }
   }
 
-  // Render ESLint config
-  if (needsEslint) {
-    renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPrettier })
-    if (needsHusky) {
-      render('config/husky')
-    }
-  }
   if (needsVueUse) {
     render('config/vueUse')
   }
@@ -466,6 +413,12 @@ async function init() {
   if (needsSonarQube) {
     render('config/sonarQube')
   }
+
+  // Render ESLint config
+  // By default ESLint, Prettier and Husky will be added
+  renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT })
+  render('config/husky')
+
   // Render code template.
   // prettier-ignore
   const codeTemplate =
@@ -573,11 +526,12 @@ async function init() {
       needsPlaywright,
       needsNightwatchCT,
       needsCypressCT,
-      needsEslint,
       needsVueUse,
       needsI18n,
       needsSonarQube,
-      needsHusky
+      // Added by default
+      needsEslint: true,
+      needsHusky: true
     })
   )
 
@@ -591,9 +545,7 @@ async function init() {
   console.log(`  ${bold(yellow('In order to use husky you need to initialize git'))}`)
   console.log(`  ${bold(green('git init'))}`)
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
-  if (needsPrettier) {
-    console.log(`  ${bold(green(getCommand(packageManager, 'format')))}`)
-  }
+  console.log(`  ${bold(green(getCommand(packageManager, 'format')))}`)
   if (needsStorybook) {
     console.log(`  ${bold(green('npx storybook@latest init --builder vite'))}`)
   }
