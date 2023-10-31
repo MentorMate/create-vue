@@ -169,24 +169,24 @@ ${commandFor('lint')}
 
   if (needsVueUse) {
     npmScriptsDescriptions += `
-### VueUse - collection of utility functions based on Composition API.(https://vueuse.org/guide/)
+### Collection of utility functions based on Composition API [VueUse](https://vueuse.org/guide/)
 `
   }
 
   if (needsI18n) {
     npmScriptsDescriptions += `
-### Vue I18n Internationalization plugin for Vue.js (https://vue-i18n.intlify.dev/)
+### Internationalization plugin for Vue.js [Vue I18n](https://vue-i18n.intlify.dev/)
 `
   }
 
   if (needsSonarQube) {
     npmScriptsDescriptions += `
-### SonarQube - Clean code for teams and enterprises (https://www.sonarsource.com/products/sonarqube/)
+### Clean code for teams and enterprises [SonarQube](https://www.sonarsource.com/products/sonarqube/)
 `
   }
 
   npmScriptsDescriptions += `
-### Husky - modern native git hooks made easy (https://typicode.github.io/husky/)
+### Modern native git hooks made easy [Husky](https://typicode.github.io/husky/)
 `
 
   https: readme += npmScriptsDescriptions
