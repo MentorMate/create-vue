@@ -7,7 +7,7 @@
   <a href="https://github.com/MentorMate/create-vue/actions/workflows/npm-publish-package.yml"><img src="https://github.com/MentorMate/create-vue/actions/workflows/npm-publish-package.yml/badge.svg" alt="Publish Package"></a>
 </p>
 
-<a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://github.com/MentorMate/create-vue/assets/69005114/bf84acf2-f265-40a6-b41d-c3277c6a0bb6" alt="MentorMate create-vue" width="550"></a>
+<img width="878" alt="Screenshot 2023-10-31 at 13 26 13" src="https://github.com/MentorMate/create-vue/assets/69005114/12ca5a2d-1afb-4793-b115-77b410e0127e">
 
 <p>
   <a href="#key-features">Key Features</a> •
