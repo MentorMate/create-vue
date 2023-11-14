@@ -1,3 +1,17 @@
 {
-  "recommendations": ["Vue.volar", "Vue.vscode-typescript-vue-plugin"]
+  "recommendations": [
+    "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin",
+    "dariofuzinato.vue-peek",
+    "sdras.vue-vscode-snippets",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-complete-tag",
+    "formulahendry.auto-rename-tag",
+    "mikestead.dotenv",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "csstools.postcss",
+    "sonarsource.sonarlint",
+    "stylelint.vscode-stylelint"
+  ]
 }
