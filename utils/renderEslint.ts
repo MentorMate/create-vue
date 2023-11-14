@@ -36,7 +36,7 @@ export default function renderEslint(rootDir, { needsTypeScript, needsCypress, n
     // we currently don't support other style guides
     styleGuide: 'default',
     hasTypeScript: needsTypeScript,
-
+    needsPrettier: true,
     additionalConfig,
     additionalDependencies
   })
