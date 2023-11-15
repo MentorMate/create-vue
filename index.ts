@@ -81,6 +81,7 @@ async function init() {
   // --cypress
   // --nightwatch
   // --playwright
+  // --tanStackQuery
   // --force (for force overwriting)
   const argv = minimist(process.argv.slice(2), {
     alias: {
@@ -109,7 +110,8 @@ async function init() {
       argv.vueUse ??
       argv.i18n ??
       argv.storybook ??
-      argv.sonarQube
+      argv.sonarQube ??
+      argv.tanStackQuery
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -131,6 +133,7 @@ async function init() {
     needsI18n?: boolean
     needsStorybook?: boolean
     needsSonarQube?: boolean
+    needsTanStackQuery?: boolean
   } = {}
 
   try {
@@ -149,6 +152,7 @@ async function init() {
     // - Add i18n - internationalization plugin?
     // - Add Storybook?
     // - Add SonarQube for code coverage?
+    // - Add TanStack Query - Hooks for fetching, caching and updating asynchronous data?
     result = await prompts(
       [
         {
@@ -287,6 +291,15 @@ async function init() {
           initial: false,
           active: 'Yes',
           inactive: 'No'
+        },
+        {
+          name: 'needsTanStackQuery',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message:
+            'Add TanStack Query - Hooks for fetching, caching and updating asynchronous data?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
         }
       ],
       {
@@ -314,7 +327,8 @@ async function init() {
     needsVueUse = argv.vueUse,
     needsI18n = argv.i18n,
     needsStorybook = argv.storybook,
-    needsSonarQube = argv.SneedsSonarQube
+    needsSonarQube = argv.needsSonarQube,
+    needsTanStackQuery = argv.needsTanStackQuery
   } = result
 
   const { needsE2eTesting } = result
@@ -414,6 +428,10 @@ async function init() {
     render('config/sonarQube')
   }
 
+  if (needsTanStackQuery) {
+    render('config/tanStackQuery')
+  }
+
   // Render ESLint config
   // By default ESLint, Prettier and Husky will be added
   renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT })
@@ -432,7 +450,8 @@ async function init() {
     generateIndex({
       needsPinia,
       needsRouter,
-      needsI18n
+      needsI18n,
+      needsTanStackQuery
     })
   )
 
@@ -528,7 +547,8 @@ async function init() {
       needsCypressCT,
       needsVueUse,
       needsI18n,
-      needsSonarQube
+      needsSonarQube,
+      needsTanStackQuery
     })
   )
 

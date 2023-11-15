@@ -1,4 +1,4 @@
-export default function generateIndex({ needsPinia, needsRouter, needsI18n }) {
+export default function generateIndex({ needsPinia, needsRouter, needsI18n, needsTanStackQuery }) {
   let indexFile = `
 import './assets/main.css'
 import { createApp } from 'vue'`
@@ -16,6 +16,11 @@ import router from './router'`
   if (needsI18n) {
     indexFile += `
 import { createI18n } from 'vue-i18n'`
+  }
+
+  if (needsTanStackQuery) {
+    indexFile += `
+import { VueQueryPlugin } from '@tanstack/vue-query'`
   }
 
   indexFile += `
@@ -68,6 +73,11 @@ const i18n = createI18n({
 
   if (needsI18n) {
     indexFile += `app.use(i18n)
+`
+  }
+
+  if (needsTanStackQuery) {
+    indexFile += `app.use(VueQueryPlugin)
 `
   }
 

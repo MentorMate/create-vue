@@ -32,6 +32,7 @@ npx @mentormate/create-vue
 * StoryBook - Frontend workshop for building UI components and pages in isolation (<https://storybook.js.org/>)
 * SonarQube - The code quality tool for better code (<https://www.sonarsource.com/products/sonarqube/>)
 * Husky - Modern native git hooks made easy (<https://typicode.github.io/husky/>)
+* TanStack Query - Powerful asynchronous state management (<https://tanstack.com/query/latest>)
 * Please submit an <a href="https://github.com/MentorMate/create-vue/issues">issue</a> if you would like to see other features to be supported
 
 ## Contribution

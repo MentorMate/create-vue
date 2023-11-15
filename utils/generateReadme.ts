@@ -27,7 +27,8 @@ export default function generateReadme({
   needsVitest,
   needsVueUse,
   needsI18n,
-  needsSonarQube
+  needsSonarQube,
+  needsTanStackQuery
 }) {
   const commandFor = (scriptName: string, args?: string) =>
     getCommand(packageManager, scriptName, args)
@@ -188,6 +189,12 @@ ${commandFor('lint')}
   npmScriptsDescriptions += `
 ### Modern native git hooks made easy [Husky](https://typicode.github.io/husky/)
 `
+
+  if (needsTanStackQuery) {
+    npmScriptsDescriptions += `
+### Powerful asynchronous state management [TanStack Query](https://tanstack.com/query/latest)
+`
+  }
 
   https: readme += npmScriptsDescriptions
 
