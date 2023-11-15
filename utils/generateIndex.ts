@@ -77,7 +77,8 @@ const i18n = createI18n({
   }
 
   if (needsTanStackQuery) {
-    indexFile += `app.use(VueQueryPlugin)`
+    indexFile += `app.use(VueQueryPlugin)
+`
   }
 
   const mount = `app.mount('#app')`
