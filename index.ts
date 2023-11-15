@@ -547,7 +547,8 @@ async function init() {
       needsCypressCT,
       needsVueUse,
       needsI18n,
-      needsSonarQube
+      needsSonarQube,
+      needsTanStackQuery
     })
   )
 
