@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "@tanstack/vue-query": "^5.8.3"
+    "@tanstack/vue-query": "^5.8.4"
   }
 }
