@@ -16,6 +16,7 @@ import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/d
 import generateReadme from './utils/generateReadme'
 import generateIndex from './utils/generateIndex'
 import getCommand from './utils/getCommand'
+import getLanguage from './utils/getLanguage'
 import renderEslint from './utils/renderEslint'
 import { FILES_TO_FILTER } from './utils/filterList'
 
@@ -118,7 +119,7 @@ async function init() {
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
   const forceOverwrite = argv.force
-
+  const language = getLanguage()
   let result: {
     projectName?: string
     shouldOverwrite?: boolean
@@ -158,25 +159,30 @@ async function init() {
         {
           name: 'projectName',
           type: targetDir ? null : 'text',
-          message: 'Project name:',
+          message: language.projectName.message,
           initial: defaultProjectName,
           onState: (state) => (targetDir = String(state.value).trim() || defaultProjectName)
         },
         {
           name: 'shouldOverwrite',
-          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'confirm'),
+          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'contogglefirm'),
           message: () => {
             const dirForPrompt =
-              targetDir === '.' ? 'Current directory' : `Target directory "${targetDir}"`
+              targetDir === '.'
+                ? language.shouldOverwrite.dirForPrompts.current
+                : `${language.shouldOverwrite.dirForPrompts.target} "${targetDir}"`
 
-            return `${dirForPrompt} is not empty. Remove existing files and continue?`
-          }
+            return `${dirForPrompt} ${language.shouldOverwrite.message}`
+          },
+          initial: true,
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'overwriteChecker',
           type: (prev, values) => {
             if (values.shouldOverwrite === false) {
-              throw new Error(red('✖') + ' Operation cancelled')
+              throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
             }
             return null
           }
@@ -184,73 +190,73 @@ async function init() {
         {
           name: 'packageName',
           type: () => (isValidPackageName(targetDir) ? null : 'text'),
-          message: 'Package name:',
+          message: language.packageName.message,
           initial: () => toValidPackageName(targetDir),
-          validate: (dir) => isValidPackageName(dir) || 'Invalid package.json name'
+          validate: (dir) => isValidPackageName(dir) || language.packageName.invalidMessage
         },
         {
           name: 'needsTypeScript',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add TypeScript?',
+          message: language.needsTypeScript.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsJsx',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add JSX Support?',
+          message: language.needsJsx.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsRouter',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Vue Router for Single Page Application development?',
+          message: language.needsRouter.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsPinia',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Pinia for state management?',
+          message: language.needsPinia.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsVitest',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Add Vitest for Unit Testing?',
+          message: language.needsVitest.message,
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsE2eTesting',
           type: () => (isFeatureFlagsUsed ? null : 'select'),
-          message: 'Add an End-to-End Testing Solution?',
+          hint: language.needsE2eTesting.hint,
+          message: language.needsE2eTesting.message,
           initial: 0,
           choices: (prev, answers) => [
-            { title: 'No', value: false },
+            { title: language.needsE2eTesting.selectOptions.negative.title, value: false },
             {
-              title: 'Playwright',
+              title: language.needsE2eTesting.selectOptions.playwright.title,
               value: 'playwright'
             },
             {
-              title: 'Nightwatch',
+              title: language.needsE2eTesting.selectOptions.nightwatch.title,
               description: answers.needsVitest
                 ? undefined
-                : 'also supports unit testing with Nightwatch Component Testing',
-              value: 'nightwatch'
+                : language.needsE2eTesting.selectOptions.nightwatch.desc
             },
             {
-              title: 'Cypress',
+              title: language.needsE2eTesting.selectOptions.cypress.title,
               description: answers.needsVitest
                 ? undefined
-                : 'also supports unit testing with Cypress Component Testing',
+                : language.needsE2eTesting.selectOptions.cypress.desc,
               value: 'cypress'
             }
           ]
@@ -260,24 +266,24 @@ async function init() {
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add VueUse - Collection of essential Composition Utilities?',
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsI18n',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add i18n - internationalization plugin?',
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsStorybook',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: 'Add Storybook?',
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsSonarQube',
@@ -289,8 +295,8 @@ async function init() {
           },
           message: 'Add SonarQube for code coverage?',
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         },
         {
           name: 'needsTanStackQuery',
@@ -298,13 +304,13 @@ async function init() {
           message:
             'Add TanStack Query - Hooks for fetching, caching and updating asynchronous data?',
           initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         }
       ],
       {
         onCancel: () => {
-          throw new Error(red('✖') + ' Operation cancelled')
+          throw new Error(red('✖') + ` ${language.errors.operationCancelled}`)
         }
       }
     )
@@ -346,7 +352,7 @@ async function init() {
     fs.mkdirSync(root)
   }
 
-  console.log(`\nScaffolding project in ${root}...`)
+  console.log(`\n${language.infos.scaffolding} ${root}...`)
 
   const pkg = { name: packageName, version: '0.0.0' }
   fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(pkg, null, 2))
@@ -552,7 +558,7 @@ async function init() {
     })
   )
 
-  console.log(`\nDone. Now run:\n`)
+  console.log(`\n${language.infos.done}\n`)
   if (root !== cwd) {
     const cdProjectName = path.relative(cwd, root)
     console.log(
