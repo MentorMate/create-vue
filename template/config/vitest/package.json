@@ -3,11 +3,11 @@
     "test:unit": "vitest"
   },
   "dependencies": {
-    "vue": "^3.3.9"
+    "vue": "^3.3.10"
   },
   "devDependencies": {
     "@vue/test-utils": "^2.4.3",
-    "jsdom": "^22.1.0",
+    "jsdom": "^23.0.1",
     "vitest": "^0.34.6"
   }
 }
