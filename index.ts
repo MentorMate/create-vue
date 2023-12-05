@@ -165,7 +165,7 @@ async function init() {
         },
         {
           name: 'shouldOverwrite',
-          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'contogglefirm'),
+          type: () => (canSkipEmptying(targetDir) || forceOverwrite ? null : 'toggle'),
           message: () => {
             const dirForPrompt =
               targetDir === '.'
@@ -250,7 +250,8 @@ async function init() {
               title: language.needsE2eTesting.selectOptions.nightwatch.title,
               description: answers.needsVitest
                 ? undefined
-                : language.needsE2eTesting.selectOptions.nightwatch.desc
+                : language.needsE2eTesting.selectOptions.nightwatch.desc,
+              value: 'nightwatch'
             },
             {
               title: language.needsE2eTesting.selectOptions.cypress.title,
