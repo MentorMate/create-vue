@@ -1,7 +1,6 @@
 {
   "projectName": {
-    "message": "Project name:",
-    "invalidMessage": "Invalid package.json name"
+    "message": "Project name:"
   },
   "shouldOverwrite": {
     "dirForPrompts": {
@@ -11,7 +10,8 @@
     "message": "is not empty. Remove existing files and continue?"
   },
   "packageName": {
-    "message": "Package name:"
+    "message": "Package name:",
+    "invalidMessage": "Invalid package.json name"
   },
   "needsTypeScript": {
     "message": "Add TypeScript?"
