@@ -10,6 +10,7 @@
     "geckodriver": "^4.2.1",
     "chromedriver": "^119.0.1",
     "ts-node": "^10.9.1",
+    "vite-plugin-nightwatch": "^0.4.5",
     "wait-on": "^7.2.0"
   }
 }
