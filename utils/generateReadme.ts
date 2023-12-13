@@ -28,7 +28,8 @@ export default function generateReadme({
   needsVueUse,
   needsI18n,
   needsSonarQube,
-  needsTanStackQuery
+  needsTanStackQuery,
+  needsTailwind
 }) {
   const commandFor = (scriptName: string, args?: string) =>
     getCommand(packageManager, scriptName, args)
@@ -193,6 +194,12 @@ ${commandFor('lint')}
   if (needsTanStackQuery) {
     npmScriptsDescriptions += `
 ### Powerful asynchronous state management [TanStack Query](https://tanstack.com/query/latest)
+`
+  }
+
+  if (needsTailwind) {
+    npmScriptsDescriptions += `
+### A utility-first CSS framework packed with classes [Tailwind](https://tailwindcss.com/docs/installation)
 `
   }
 
