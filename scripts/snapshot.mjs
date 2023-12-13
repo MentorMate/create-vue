@@ -69,8 +69,8 @@ withTestsFlags.push(['with-tests'])
 flagCombinations.push(...withTestsFlags)
 
 const playgroundDir = path.resolve(__dirname, '../playground/')
-
 cd(playgroundDir)
+
 // remove all previous combinations
 for (const flags of flagCombinations) {
   const projectName = flags.join('-')
