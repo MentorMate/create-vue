@@ -32,6 +32,12 @@ export default function renderEslint(rootDir, { needsTypeScript, needsCypress, n
     additionalDependencies['eslint-plugin-cypress'] = eslintDeps['eslint-plugin-cypress']
   }
 
+  // add vuejs-accessibility
+  additionalConfig.plugins = ['vuejs-accessibility']
+  additionalConfig.extends = ['plugin:vuejs-accessibility/recommended']
+  additionalDependencies['eslint-plugin-vuejs-accessibility'] =
+    eslintDeps['eslint-plugin-vuejs-accessibility']
+
   const { pkg, files } = createESLintConfig({
     vueVersion: '3.x',
     // we currently don't support other style guides
