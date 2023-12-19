@@ -162,7 +162,7 @@ ${commandFor('test:e2e', '--debug')}
   }
 
   npmScriptsDescriptions += `
-### Lint with [ESLint](https://eslint.org/), including eslint plugin for checking accessibility rules
+### Lint with [ESLint](https://eslint.org/), including [plugin](https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/) for checking accessibility rules
 
 \`\`\`sh
 ${commandFor('lint')}
