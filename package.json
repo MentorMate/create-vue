@@ -1,6 +1,6 @@
 {
   "name": "@mentormate/create-vue",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "🛠️ Extended way to start a Vite-powered Vue project",
   "type": "module",
   "bin": {
@@ -12,7 +12,7 @@
     "template"
   ],
   "engines": {
-    "node": ">=v16.20.0"
+    "node": ">=v18.16.1"
   },
   "scripts": {
     "dev": "chokidar \"index.ts\" \"scripts/**/*\" \"template/**/*\" \"utils/**/*\" -c \"npm run build\"",
