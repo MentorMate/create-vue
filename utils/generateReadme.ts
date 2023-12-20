@@ -28,7 +28,8 @@ export default function generateReadme({
   needsVueUse,
   needsI18n,
   needsSonarQube,
-  needsTanStackQuery
+  needsTanStackQuery,
+  needsTailwind
 }) {
   const commandFor = (scriptName: string, args?: string) =>
     getCommand(packageManager, scriptName, args)
@@ -161,7 +162,7 @@ ${commandFor('test:e2e', '--debug')}
   }
 
   npmScriptsDescriptions += `
-### Lint with [ESLint](https://eslint.org/)
+### Lint with [ESLint](https://eslint.org/), including [plugin](https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/) for checking accessibility rules
 
 \`\`\`sh
 ${commandFor('lint')}
@@ -193,6 +194,12 @@ ${commandFor('lint')}
   if (needsTanStackQuery) {
     npmScriptsDescriptions += `
 ### Powerful asynchronous state management [TanStack Query](https://tanstack.com/query/latest)
+`
+  }
+
+  if (needsTailwind) {
+    npmScriptsDescriptions += `
+### A utility-first CSS framework packed with classes [Tailwind](https://tailwindcss.com/docs/installation)
 `
   }
 

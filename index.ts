@@ -82,6 +82,7 @@ async function init() {
   // --nightwatch
   // --playwright
   // --tanStackQuery
+  // --tailwind
   // --force (for force overwriting)
   const argv = minimist(process.argv.slice(2), {
     alias: {
@@ -111,7 +112,8 @@ async function init() {
       argv.i18n ??
       argv.storybook ??
       argv.sonarQube ??
-      argv.tanStackQuery
+      argv.tanStackQuery ??
+      argv.tailwind
     ) === 'boolean'
 
   let targetDir = argv._[0]
@@ -134,6 +136,7 @@ async function init() {
     needsStorybook?: boolean
     needsSonarQube?: boolean
     needsTanStackQuery?: boolean
+    needsTailwind?: boolean
   } = {}
 
   try {
@@ -153,6 +156,7 @@ async function init() {
     // - Add Storybook?
     // - Add SonarQube for code coverage?
     // - Add TanStack Query - Hooks for fetching, caching and updating asynchronous data?
+    // - Add Tailwind
     result = await prompts(
       [
         {
@@ -306,6 +310,14 @@ async function init() {
           initial: false,
           active: language.defaultToggleOptions.active,
           inactive: language.defaultToggleOptions.inactive
+        },
+        {
+          name: 'needsTailwind',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: 'Add TailwindCss for styling?',
+          initial: false,
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
         }
       ],
       {
@@ -334,7 +346,8 @@ async function init() {
     needsI18n = argv.i18n,
     needsStorybook = argv.storybook,
     needsSonarQube = argv.needsSonarQube,
-    needsTanStackQuery = argv.needsTanStackQuery
+    needsTanStackQuery = argv.needsTanStackQuery,
+    needsTailwind = argv.needsTailwind
   } = result
 
   const { needsE2eTesting } = result
@@ -480,6 +493,10 @@ async function init() {
     render('config/tanStackQuery')
   }
 
+  if (needsTailwind) {
+    render('config/tailwind')
+  }
+
   // Render ESLint config
   // By default ESLint, Prettier and Husky will be added
   renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT })
@@ -596,7 +613,8 @@ async function init() {
       needsVueUse,
       needsI18n,
       needsSonarQube,
-      needsTanStackQuery
+      needsTanStackQuery,
+      needsTailwind
     })
   )
 
