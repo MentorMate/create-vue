@@ -11,7 +11,10 @@ import deepMerge from './deepMerge'
 import eslintTemplatePackage from '../template/eslint/package.json' assert { type: 'json' }
 const eslintDeps = eslintTemplatePackage.devDependencies
 
-export default function renderEslint(rootDir, { needsTypeScript, needsCypress, needsCypressCT }) {
+export default function renderEslint(
+  rootDir,
+  { needsTypeScript, needsCypress, needsCypressCT, needsPlaywright }
+) {
   const additionalConfig: Linter.Config = {}
   const additionalDependencies = {}
 
@@ -32,9 +35,28 @@ export default function renderEslint(rootDir, { needsTypeScript, needsCypress, n
     additionalDependencies['eslint-plugin-cypress'] = eslintDeps['eslint-plugin-cypress']
   }
 
+  if (needsPlaywright) {
+    // if the extends key already exists make sure to not override it, but add to it
+    if (additionalConfig.extends) {
+      additionalConfig.extends = [...additionalConfig.extends, 'plugin:playwright/recommended']
+    } else {
+      additionalConfig.extends = ['plugin:playwright/recommended']
+    }
+
+    additionalDependencies['eslint-plugin-playwright'] = eslintDeps['eslint-plugin-playwright']
+  }
+
   // add vuejs-accessibility
   additionalConfig.plugins = ['vuejs-accessibility']
-  additionalConfig.extends = ['plugin:vuejs-accessibility/recommended']
+  if (additionalConfig.extends) {
+    additionalConfig.extends = [
+      ...additionalConfig.extends,
+      'plugin:vuejs-accessibility/recommended'
+    ]
+  } else {
+    additionalConfig.extends = ['plugin:vuejs-accessibility/recommended']
+  }
+
   additionalDependencies['eslint-plugin-vuejs-accessibility'] =
     eslintDeps['eslint-plugin-vuejs-accessibility']
 
