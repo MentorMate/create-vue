@@ -36,11 +36,22 @@ export default function renderEslint(
   }
 
   if (needsPlaywright) {
-    // if the extends key already exists make sure to not override it, but add to it
-    if (additionalConfig.extends) {
-      additionalConfig.extends = [...additionalConfig.extends, 'plugin:playwright/recommended']
+    // if the key already exists make sure to not override it, but add to it
+    if (additionalConfig.overrides) {
+      additionalConfig.overrides = [
+        ...additionalConfig.overrides,
+        {
+          files: ['e2e/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+          extends: ['plugin:playwright/recommended']
+        }
+      ]
     } else {
-      additionalConfig.extends = ['plugin:playwright/recommended']
+      additionalConfig.overrides = [
+        {
+          files: ['e2e/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+          extends: ['plugin:playwright/recommended']
+        }
+      ]
     }
 
     additionalDependencies['eslint-plugin-playwright'] = eslintDeps['eslint-plugin-playwright']
