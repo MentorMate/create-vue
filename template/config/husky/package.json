@@ -3,6 +3,6 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "husky": "^9.0.2"
+    "husky": "^9.0.10"
   }
 }
