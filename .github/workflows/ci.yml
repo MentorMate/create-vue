@@ -182,4 +182,4 @@ jobs:
       - if: ${{ contains(matrix.flag-for-e2e, '--') }}
         name: Run e2e test script
         working-directory: ../sample-project
-        run: npm test:e2e
+        run: npm run test:e2e
