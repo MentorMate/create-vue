@@ -502,6 +502,10 @@ async function init() {
   renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPlaywright })
   render('config/husky')
 
+  // if (needsPrettier) {
+  render('config/prettier')
+  // }
+
   // Render code template.
   // prettier-ignore
   const codeTemplate =
