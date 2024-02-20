@@ -34,7 +34,6 @@ jobs:
         with:
           path: outfile.cjs
           key: ${{ github.sha }}-${{ hashFiles('package-lock.json') }}
-
   test:
     needs: build
     strategy:
@@ -166,7 +165,7 @@ jobs:
 
       - name: Run build script
         working-directory: ../sample-project
-        run: npm build
+        run: npm run build
 
       - name: Download Cypress
         if: ${{ contains(matrix.flag-for-e2e, '--cypress') }}
