@@ -5,6 +5,7 @@
   <a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" alt="Commitizen friendly"></a>
   <a href="https://github.com/MentorMate/create-vue/actions/workflows/github-code-scanning/codeql"><img src="https://github.com/MentorMate/create-vue/actions/workflows/github-code-scanning/codeql/badge.svg" alt="CodeQL friendly"></a>
   <a href="https://github.com/MentorMate/create-vue/actions/workflows/npm-publish-package.yml"><img src="https://github.com/MentorMate/create-vue/actions/workflows/npm-publish-package.yml/badge.svg" alt="Publish Package"></a>
+  <a href="https://github.com/MentorMate/create-vue/actions/workflows/ci.yml"><img src="https://github.com/MentorMate/create-vue/actions/workflows/ci.yml/badge.svg" alt="CI Badge"/></a>
 </p>
 
 <img width="794" alt="Screenshot 2023-12-20 at 17 04 59" src="https://github.com/MentorMate/create-vue/assets/69005114/645aca7c-af75-4d05-b959-916ec9d7e1d1">
