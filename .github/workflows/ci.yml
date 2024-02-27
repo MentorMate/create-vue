@@ -38,6 +38,8 @@ jobs:
     needs: build
     strategy:
       matrix:
+        node-version: [18]
+        os: [ubuntu-latest]
         flag-for-ts: ['', '--typescript']
         flag-for-jsx: ['', '--jsx']
         flag-for-router: ['', '--router']
@@ -52,9 +54,6 @@ jobs:
         # Skip ESLint/Prettier tests as we've reached the limit of job numbers
         # TODO: Find a way to test them without adding new jobs
 
-        node-version: [18]
-        os: [ubuntu-latest]
-
         # Run a few tests on other systems and Node.js versions
         include:
           - node-version: 18
@@ -64,7 +63,12 @@ jobs:
             flag-for-router: '--router'
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
-            flag-for-e2e: '--cypress'
+            flag-for-e2e: '--playwright'
+            flag-for-tanStackQuery: '--tanStackQuery'
+            flag-for-tailwind: '--tailwind'
+            flag-for-vueUse: '--vueUse'
+            flag-for-i18n: '--i18n'
+            flag-for-sonarQube: '--sonarQube'
 
           - node-version: 18
             os: macos-latest
@@ -73,7 +77,12 @@ jobs:
             flag-for-router: '--router'
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
-            flag-for-e2e: '--cypress'
+            flag-for-e2e: '--playwright'
+            flag-for-tanStackQuery: '--tanStackQuery'
+            flag-for-tailwind: '--tailwind'
+            flag-for-vueUse: '--vueUse'
+            flag-for-i18n: '--i18n'
+            flag-for-sonarQube: '--sonarQube'
 
           - node-version: 20
             os: ubuntu-latest
@@ -82,16 +91,13 @@ jobs:
             flag-for-router: '--router'
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
-            flag-for-e2e: '--cypress'
+            flag-for-e2e: '--playwright'
+            flag-for-tanStackQuery: '--tanStackQuery'
+            flag-for-tailwind: '--tailwind'
+            flag-for-vueUse: '--vueUse'
+            flag-for-i18n: '--i18n'
+            flag-for-sonarQube: '--sonarQube'
 
-          - node-version: 16
-            os: ubuntu-latest
-            flag-for-ts: '--typescript'
-            flag-for-jsx: '--jsx'
-            flag-for-router: '--router'
-            flag-for-pinia: '--pinia'
-            flag-for-vitest: '--vitest'
-            flag-for-e2e: '--cypress'
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
