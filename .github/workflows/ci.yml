@@ -38,7 +38,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        version:  [18, 20]
+        version: 18
         # It's quite costly to install Cypress & Playwright even with cache.
         # Maybe we can split them into another job so that all the projects
         # can share the same binary installation.
@@ -92,7 +92,7 @@ jobs:
         id: cache-restore
         with:
           path: outfile.cjs
-          key: ${{ github.sha }}-${{ hashFiles('npm-lock.yaml') }}
+          key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('npm-lock.yaml') }}
       - name: Build the package on cache miss
         if: steps.cache-restore.outputs.cache-hit != 'true'
         run: npm install && npm run build
