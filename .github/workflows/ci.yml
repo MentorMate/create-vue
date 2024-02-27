@@ -33,66 +33,81 @@ jobs:
         id: cache
         with:
           path: outfile.cjs
-          key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('package-lock.json') }}
+          key: ${{ github.sha }}-${{ hashFiles('package-lock.json') }}
   test:
     needs: build
     strategy:
+      max-parallel: 6
       matrix:
-        version: 18
-        # It's quite costly to install Cypress & Playwright even with cache.
-        # Maybe we can split them into another job so that all the projects
-        # can share the same binary installation.
+        node-version: [18]
+        os: [ubuntu-latest]
         flag-for-ts: ['', '--typescript']
         flag-for-jsx: ['', '--jsx']
         flag-for-router: ['', '--router']
         flag-for-pinia: ['', '--pinia']
         flag-for-vitest: ['', '--vitest']
-        flag-for-tailwind: ['', '--tailwind']
+
+        # It's quite costly to install Cypress & Playwright even with cache.
+        # Maybe we can split them into another job so that all the projects
+        # can share the same binary installation.
         flag-for-e2e: ['', '--cypress', '--playwright']
         
+        # Run a few tests on other systems and Node.js versions
         include:
-          - os: ubuntu-latest
+          - node-version: 18
+            os: windows-latest
             flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
             flag-for-router: '--router'
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
             flag-for-e2e: '--cypress'
-          - os: windows-latest
+
+          - node-version: 18
+            os: macos-latest
             flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
             flag-for-router: '--router'
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
-            flag-for-e2e: '--cypress' 
-          - os: macos-latest
+            flag-for-e2e: '--cypress'
+
+          - node-version: 20
+            os: ubuntu-latest
             flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
             flag-for-router: '--router'
             flag-for-pinia: '--pinia'
             flag-for-vitest: '--vitest'
-            flag-for-e2e: '--cypress'  
-            # Skip ESLint/Prettier tests as we've reached the limit of job numbers
-        # TODO: Find a way to test them without adding new jobs
+            flag-for-e2e: '--cypress'
+
+          - node-version: 16
+            os: ubuntu-latest
+            flag-for-ts: '--typescript'
+            flag-for-jsx: '--jsx'
+            flag-for-router: '--router'
+            flag-for-pinia: '--pinia'
+            flag-for-vitest: '--vitest'
+            flag-for-e2e: '--cypress'
 
     # Run a few tests on other systems and Node.js versions    
-    runs-on: ${{ matrix.os }} ${{ matrix.version }}
+    runs-on: ${{ matrix.os }}-${{ matrix.node-version }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
-      FEATURE_FLAGS: ${{ matrix.flag-for-ts }} ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }} ${{ matrix.flag-for-vitest }} ${{ matrix.flag-for-e2e }} ${{matrix.flag-for-tailwind}}
+      FEATURE_FLAGS: ${{ matrix.flag-for-ts }} ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }} ${{ matrix.flag-for-vitest }} ${{ matrix.flag-for-e2e }}
       # Sometimes the Linux runner can't verify Cypress in 30s
       CYPRESS_VERIFY_TIMEOUT: 60000
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.version }}
+          node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - uses: actions/cache/restore@v4
         id: cache-restore
         with:
           path: outfile.cjs
-          key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('npm-lock.yaml') }}
+          key: ${{ github.sha }}-${{ hashFiles('npm-lock.yaml') }}
       - name: Build the package on cache miss
         if: steps.cache-restore.outputs.cache-hit != 'true'
         run: npm install && npm run build
