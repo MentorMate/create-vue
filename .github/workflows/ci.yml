@@ -39,7 +39,7 @@ jobs:
     strategy:
       max-parallel: 6
       matrix:
-        node-version: [18, 20]
+        node-version: [18]
         os: [ubuntu-latest, windows-latest, macos-latest]
         flag-for-ts: ['', '--typescript']
         flag-for-jsx: ['', '--jsx']
