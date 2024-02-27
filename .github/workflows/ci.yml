@@ -13,9 +13,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ['16.x', '18.x', '20.x']
     name: Build the package with ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
