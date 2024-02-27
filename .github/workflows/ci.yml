@@ -33,7 +33,7 @@ jobs:
         id: cache
         with:
           path: outfile.cjs
-          key: ${{ github.sha }}-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('package-lock.json') }}
   test:
     needs: build
     strategy:
