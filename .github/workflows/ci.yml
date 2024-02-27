@@ -51,7 +51,7 @@ jobs:
         # Maybe we can split them into another job so that all the projects
         # can share the same binary installation.
         flag-for-e2e: ['', '--cypress', '--playwright']
-        
+
     # Run a few tests on other systems and Node.js versions    
     runs-on: ${{ matrix.os }}-${{ matrix.node-version }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
@@ -86,7 +86,6 @@ jobs:
         run: |
           echo "PLAYWRIGHT_BROWSERS_PATH=$HOME\.cache\playwright-bin" >> $env:GITHUB_ENV
           echo "CYPRESS_CACHE_FOLDER=$HOME\.cache\cypress-bin" >> $env:GITHUB_ENV
-
       - if: ${{ contains(matrix.flag-for-e2e, '--cypress') }}
         name: Cache Cypress binaries
         id: cache-cypress
@@ -134,7 +133,6 @@ jobs:
         run: |
           npm exec cypress cache list
           npm exec cypress install
-
       - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
         name: Install Playwright dependencies
         working-directory: ../sample-project
