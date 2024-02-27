@@ -13,7 +13,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build the package
+    strategy:
+      matrix:
+        node-version: ['16.x', '18.x', '20.x']
+    name: Build the package with ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
       # Setup .npmrc file to publish to npm
