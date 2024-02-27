@@ -38,25 +38,45 @@ jobs:
     needs: build
     strategy:
       matrix:
-        # Skip ESLint/Prettier tests as we've reached the limit of job numbers
-        # TODO: Find a way to test them without adding new jobs
-        node-version:  [18, 20]
+        version:  [18, 20]
+        # It's quite costly to install Cypress & Playwright even with cache.
+        # Maybe we can split them into another job so that all the projects
+        # can share the same binary installation.
+        flag-for-ts: ['', '--typescript']
+        flag-for-jsx: ['', '--jsx']
+        flag-for-router: ['', '--router']
+        flag-for-pinia: ['', '--pinia']
+        flag-for-vitest: ['', '--vitest']
+        flag-for-tailwind: ['', '--tailwind']
+        flag-for-e2e: ['', '--cypress', '--playwright']
+        
         include:
           - os: ubuntu-latest
-            flags: ['', '--typescript', '--jsx', '--router', '--pinia', '--vitest', '--tailwind']
-            flag-for-e2e: ['', '--cypress', '--playwright']
+            flag-for-ts: '--typescript'
+            flag-for-jsx: '--jsx'
+            flag-for-router: '--router'
+            flag-for-pinia: '--pinia'
+            flag-for-vitest: '--vitest'
+            flag-for-e2e: '--cypress'
           - os: windows-latest
-            flags: ['', '--typescript', '--jsx', '--router', '--pinia', '--vitest', '--tailwind']
-            flag-for-e2e: ['', '--cypress', '--playwright']
+            flag-for-ts: '--typescript'
+            flag-for-jsx: '--jsx'
+            flag-for-router: '--router'
+            flag-for-pinia: '--pinia'
+            flag-for-vitest: '--vitest'
+            flag-for-e2e: '--cypress' 
           - os: macos-latest
-            flags: ['', '--typescript', '--jsx', '--router', '--pinia', '--vitest', '--tailwind']
-            # It's quite costly to install Cypress & Playwright even with cache.
-            # Maybe we can split them into another job so that all the projects
-            # can share the same binary installation.
-            flag-for-e2e: ['', '--cypress', '--playwright']
-        
+            flag-for-ts: '--typescript'
+            flag-for-jsx: '--jsx'
+            flag-for-router: '--router'
+            flag-for-pinia: '--pinia'
+            flag-for-vitest: '--vitest'
+            flag-for-e2e: '--cypress'  
+            # Skip ESLint/Prettier tests as we've reached the limit of job numbers
+        # TODO: Find a way to test them without adding new jobs
+
     # Run a few tests on other systems and Node.js versions    
-    runs-on: ${{ matrix.os }} ${{ matrix.node-version }}
+    runs-on: ${{ matrix.os }} ${{ matrix.version }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
       FEATURE_FLAGS: ${{ matrix.flag-for-ts }} ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }} ${{ matrix.flag-for-vitest }} ${{ matrix.flag-for-e2e }} ${{matrix.flag-for-tailwind}}
@@ -66,7 +86,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.version }}
           cache: 'npm'
       - uses: actions/cache/restore@v4
         id: cache-restore
