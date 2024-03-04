@@ -51,8 +51,8 @@
   },
   "homepage": "https://github.com/MentorMate/create-vue#readme",
   "devDependencies": {
-    "@commitlint/cli": "^18.6.1",
-    "@commitlint/config-conventional": "^18.6.2",
+    "@commitlint/cli": "^19.0.3",
+    "@commitlint/config-conventional": "^19.0.3",
     "@tsconfig/node20": "^20.1.2",
     "@types/eslint": "^8.56.3",
     "@types/node": "^20.11.20",
