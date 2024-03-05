@@ -2,6 +2,6 @@
   "devDependencies": {
     "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-vuejs-accessibility": "^2.2.1",
-    "eslint-plugin-playwright": "^1.2.0"
+    "eslint-plugin-playwright": "^1.5.1"
   }
 }
