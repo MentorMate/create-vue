@@ -8,11 +8,9 @@ if (!/pnpm/.test(process.env.npm_config_user_agent ?? ''))
   throw new Error("Please use pnpm ('pnpm run snapshot') to generate snapshots!")
 
 const featureFlags = [
-  'typescript',
   'jsx',
   'router',
   'pinia',
-  'vitest',
   'cypress',
   'playwright',
   'nightwatch'
@@ -60,7 +58,7 @@ flagCombinations.push(['default'])
 // Previously it means `--cypress` without `--vitest`.
 // Here we generate the snapshots only for the sake of easier comparison with older templates.
 // They may be removed in later releases.
-const withTestsFlags = fullCombination(['typescript', 'jsx', 'router', 'pinia']).map((args) => [
+const withTestsFlags = fullCombination(['jsx', 'router', 'pinia']).map((args) => [
   ...args,
   'with-tests'
 ])

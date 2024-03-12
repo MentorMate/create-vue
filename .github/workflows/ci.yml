@@ -1,4 +1,4 @@
-name: 'ci'
+name: 'CI'
 on:
   push:
     branches:
@@ -41,11 +41,9 @@ jobs:
       matrix:
         node-version: [18]
         os: [ubuntu-latest]
-        flag-for-ts: ['', '--typescript']
         flag-for-jsx: ['', '--jsx']
         flag-for-router: ['', '--router']
         flag-for-pinia: ['', '--pinia']
-        flag-for-vitest: ['', '--vitest']
 
         # It's quite costly to install Cypress & Playwright even with cache.
         # Maybe we can split them into another job so that all the projects
@@ -59,11 +57,9 @@ jobs:
         include:
           - node-version: 18
             os: windows-latest
-            flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
             flag-for-router: '--router'
             flag-for-pinia: '--pinia'
-            flag-for-vitest: '--vitest'
             flag-for-e2e: '--playwright'
             flag-for-tanStackQuery: '--tanStackQuery'
             flag-for-tailwind: '--tailwind'
@@ -73,11 +69,9 @@ jobs:
 
           - node-version: 18
             os: macos-latest
-            flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
             flag-for-router: '--router'
             flag-for-pinia: '--pinia'
-            flag-for-vitest: '--vitest'
             flag-for-e2e: '--playwright'
             flag-for-tanStackQuery: '--tanStackQuery'
             flag-for-tailwind: '--tailwind'
@@ -87,11 +81,9 @@ jobs:
 
           - node-version: 20
             os: ubuntu-latest
-            flag-for-ts: '--typescript'
             flag-for-jsx: '--jsx'
             flag-for-router: '--router'
             flag-for-pinia: '--pinia'
-            flag-for-vitest: '--vitest'
             flag-for-e2e: '--playwright'
             flag-for-tanStackQuery: '--tanStackQuery'
             flag-for-tailwind: '--tailwind'
@@ -102,7 +94,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
-      FEATURE_FLAGS: ${{ matrix.flag-for-ts }} ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }} ${{ matrix.flag-for-vitest }} ${{ matrix.flag-for-e2e }}
+      FEATURE_FLAGS: ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }}  ${{ matrix.flag-for-e2e }}
       # Sometimes the Linux runner can't verify Cypress in 30s
       CYPRESS_VERIFY_TIMEOUT: 60000
     steps:
