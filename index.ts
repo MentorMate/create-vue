@@ -324,7 +324,7 @@ async function init() {
     shouldOverwrite = argv.force,
     needsJsx = argv.jsx,
     needsTypeScript = true, // prefer TS as a solution
-    needsRouter = argv.router,
+    needsRouter = argv.router || argv['vue-router'],
     needsPinia = argv.pinia,
     needsVitest = true, // per our ESP we always want unit test support
     needsVueUse = argv.vueUse,
@@ -631,5 +631,3 @@ async function init() {
 init().catch((e) => {
   console.error(e)
 })
-
-
