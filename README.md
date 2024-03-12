@@ -7,7 +7,8 @@
 ![Publish Package](https://github.com/MentorMate/create-vue/actions/workflows/npm-publish-package.yml/badge.svg)
 ![CI Badge](https://github.com/MentorMate/create-vue/actions/workflows/ci.yml/badge.svg)
 
-![Screenshot 2023-12-20 at 17 04 59](https://github.com/MentorMate/create-vue/assets/69005114/645aca7c-af75-4d05-b959-916ec9d7e1d1)
+<img width="787" alt="Screenshot 2024-03-12 at 12 18 48" src="https://github.com/MentorMate/create-vue/assets/69005114/b11b0314-c159-40c7-a5e8-3afd783d49c6">
+
 
 [Key Features](#key-features) • [Contribute](#contributing) • [Other cool projects](#other-cool-projects) • [License](#license)
 
