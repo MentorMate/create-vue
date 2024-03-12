@@ -72,12 +72,12 @@ async function init() {
   const cwd = process.cwd()
   // possible options:
   // --default
-  // --typescript / --ts
+  // --typescript / --ts (always true)
   // --jsx
   // --router / --vue-router
   // --pinia
   // --with-tests / --tests (equals to `--vitest --cypress`)
-  // --vitest
+  // --vitest (always true)
   // --cypress
   // --nightwatch
   // --playwright
@@ -96,7 +96,7 @@ async function init() {
     router: { type: 'boolean' }
   } as const
 
-  const { values: argv } = parseArgs({
+  const { values: argv, positionals } = parseArgs({
     args,
     options,
     strict: false
@@ -123,7 +123,7 @@ async function init() {
       argv.tailwind
     ) === 'boolean'
 
-  let targetDir = args[0]
+  let targetDir = positionals[0]
   const defaultProjectName = !targetDir ? 'vue-project' : targetDir
 
   const forceOverwrite = argv.force
@@ -205,14 +205,6 @@ async function init() {
           validate: (dir) => isValidPackageName(dir) || language.packageName.invalidMessage
         },
         {
-          name: 'needsTypeScript',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsTypeScript.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive
-        },
-        {
           name: 'needsJsx',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsJsx.message,
@@ -237,14 +229,6 @@ async function init() {
           inactive: language.defaultToggleOptions.inactive
         },
         {
-          name: 'needsVitest',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsVitest.message,
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive
-        },
-        {
           name: 'needsE2eTesting',
           type: () => (isFeatureFlagsUsed ? null : 'select'),
           hint: language.needsE2eTesting.hint,
@@ -258,16 +242,10 @@ async function init() {
             },
             {
               title: language.needsE2eTesting.selectOptions.nightwatch.title,
-              description: answers.needsVitest
-                ? undefined
-                : language.needsE2eTesting.selectOptions.nightwatch.desc,
               value: 'nightwatch'
             },
             {
               title: language.needsE2eTesting.selectOptions.cypress.title,
-              description: answers.needsVitest
-                ? undefined
-                : language.needsE2eTesting.selectOptions.cypress.desc,
               value: 'cypress'
             }
           ]
@@ -299,7 +277,7 @@ async function init() {
         {
           name: 'needsSonarQube',
           type: (prev, values) => {
-            if (isFeatureFlagsUsed || !values.needsVitest) {
+            if (isFeatureFlagsUsed) {
               return null
             }
             return 'toggle'
@@ -345,10 +323,10 @@ async function init() {
     packageName = projectName ?? defaultProjectName,
     shouldOverwrite = argv.force,
     needsJsx = argv.jsx,
-    needsTypeScript = argv.typescript,
+    needsTypeScript = true, // prefer TS as a solution
     needsRouter = argv.router,
     needsPinia = argv.pinia,
-    needsVitest = argv.vitest || argv.tests,
+    needsVitest = true, // per our ESP we always want unit test support
     needsVueUse = argv.vueUse,
     needsI18n = argv.i18n,
     needsStorybook = argv.storybook,
@@ -653,3 +631,5 @@ async function init() {
 init().catch((e) => {
   console.error(e)
 })
+
+
