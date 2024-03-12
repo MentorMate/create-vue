@@ -323,7 +323,6 @@ async function init() {
     packageName = projectName ?? defaultProjectName,
     shouldOverwrite = argv.force,
     needsJsx = argv.jsx,
-    needsTypeScript = argv.typescript || argv['ts'],
     needsTypeScript = true, // prefer TS as a solution
     needsRouter = argv.router || argv['vue-router'],
     needsPinia = argv.pinia,
@@ -632,5 +631,3 @@ async function init() {
 init().catch((e) => {
   console.error(e)
 })
-
-
