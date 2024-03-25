@@ -484,7 +484,10 @@ async function init() {
 
   // Render ESLint config
   // By default ESLint, Prettier and Husky will be added
+  // if (needsEslint) {
   renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPlaywright })
+  render('config/eslint')
+  // }
   render('config/husky')
 
   // if (needsPrettier) {
