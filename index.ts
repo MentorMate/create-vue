@@ -484,7 +484,10 @@ async function init() {
 
   // Render ESLint config
   // By default ESLint, Prettier and Husky will be added
+  // if (needsEslint) {
   renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPlaywright })
+  render('config/eslint')
+  // }
   render('config/husky')
 
   // if (needsPrettier) {
@@ -582,9 +585,15 @@ async function init() {
   }
 
   // Instructions:
-  // Supported package managers: pnpm > yarn > npm
+  // Supported package managers: pnpm > yarn > bun > npm
   const userAgent = process.env.npm_config_user_agent ?? ''
-  const packageManager = /pnpm/.test(userAgent) ? 'pnpm' : /yarn/.test(userAgent) ? 'yarn' : 'npm'
+  const packageManager = /pnpm/.test(userAgent)
+    ? 'pnpm'
+    : /yarn/.test(userAgent)
+      ? 'yarn'
+      : /bun/.test(userAgent)
+        ? 'bun'
+        : 'npm'
 
   // README generation
   fs.writeFileSync(
