@@ -212,7 +212,7 @@ async function init() {
         {
           name: 'needsSampleProject',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: language.needsSampleProject.message,
+          message: 'Create a sample project using Pinia, Vue-router and Vitest?',
           initial: false,
           active: language.defaultToggleOptions.active,
           inactive: language.defaultToggleOptions.inactive

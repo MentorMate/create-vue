@@ -13,9 +13,6 @@
     "message": "Package name:",
     "invalidMessage": "Invalid package.json name"
   },
-  "needsSampleProject": {
-    "message": "Create a sample project using Pinia, Vue-router and Vitest?"
-  },
   "needsTypeScript": {
     "message": "Add TypeScript?"
   },
