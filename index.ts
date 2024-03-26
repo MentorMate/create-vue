@@ -381,7 +381,7 @@ async function init() {
     renderTemplate(templateDir, root, callbacks)
   }
 
-  // sample project has its own structure, to avoid overriding
+  // Sample project has its own structure, to avoid overriding
   // render base + configs only if sample is not selected
   if (needsSampleProject) {
     render('sample-project')
