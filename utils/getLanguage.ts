@@ -22,6 +22,7 @@ interface Language {
   projectName: LanguageItem
   shouldOverwrite: LanguageItem
   packageName: LanguageItem
+  needsSampleProject: LanguageItem
   needsTypeScript: LanguageItem
   needsJsx: LanguageItem
   needsRouter: LanguageItem
