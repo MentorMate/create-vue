@@ -72,6 +72,7 @@ async function init() {
   const cwd = process.cwd()
   // possible options:
   // --default
+  // --sampleProject
   // --typescript / --ts (always true)
   // --jsx
   // --router / --vue-router
@@ -88,6 +89,7 @@ async function init() {
 
   // alias is not supported by parseArgs
   const options = {
+    sampleProject: { type: 'boolean' },
     typescript: { type: 'boolean' },
     ts: { type: 'boolean' },
     'with-tests': { type: 'boolean' },
@@ -106,6 +108,7 @@ async function init() {
   const isFeatureFlagsUsed =
     typeof (
       argv.default ??
+      argv.sampleProject ??
       (argv.ts || argv.typescript) ??
       argv.jsx ??
       (argv.router || argv['vue-router']) ??
@@ -132,6 +135,7 @@ async function init() {
     projectName?: string
     shouldOverwrite?: boolean
     packageName?: string
+    needsSampleProject?: boolean
     needsTypeScript?: boolean
     needsJsx?: boolean
     needsRouter?: boolean
@@ -151,6 +155,7 @@ async function init() {
     // - Project name:
     //   - whether to overwrite the existing directory or not?
     //   - enter a valid package name for package.json
+    // - Create a sample project using Pinia, Vue-router and Vitest?
     // - Project language: JavaScript / TypeScript
     // - Add JSX Support?
     // - Install Vue Router for SPA development?
@@ -205,6 +210,14 @@ async function init() {
           validate: (dir) => isValidPackageName(dir) || language.packageName.invalidMessage
         },
         {
+          name: 'needsSampleProject',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          message: language.needsSampleProject.message,
+          initial: false,
+          active: language.defaultToggleOptions.active,
+          inactive: language.defaultToggleOptions.inactive
+        },
+        {
           name: 'needsJsx',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsJsx.message,
@@ -214,7 +227,8 @@ async function init() {
         },
         {
           name: 'needsRouter',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          type: (prev, values) =>
+            isFeatureFlagsUsed || values.needsSampleProject ? null : 'toggle',
           message: language.needsRouter.message,
           initial: false,
           active: language.defaultToggleOptions.active,
@@ -222,7 +236,8 @@ async function init() {
         },
         {
           name: 'needsPinia',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+          type: (prev, values) =>
+            isFeatureFlagsUsed || values.needsSampleProject ? null : 'toggle',
           message: language.needsPinia.message,
           initial: false,
           active: language.defaultToggleOptions.active,
@@ -322,6 +337,7 @@ async function init() {
     projectName,
     packageName = projectName ?? defaultProjectName,
     shouldOverwrite = argv.force,
+    needsSampleProject = argv.sampleProject,
     needsJsx = argv.jsx,
     needsTypeScript = true, // prefer TS as a solution
     needsRouter = argv.router || argv['vue-router'],
@@ -365,152 +381,159 @@ async function init() {
     const templateDir = path.resolve(templateRoot, templateName)
     renderTemplate(templateDir, root, callbacks)
   }
-  // Render base template
-  render('base')
 
-  // Add configs.
-  if (needsJsx) {
-    render('config/jsx')
-  }
-  if (needsRouter) {
-    render('config/router')
-  }
-  if (needsPinia) {
-    render('config/pinia')
-  }
-  if (needsVitest) {
-    render('config/vitest')
-  }
-  if (needsPlaywright) {
-    render('config/playwright')
-  }
-  if (needsNightwatch) {
-    render('config/nightwatch')
-  }
-  if (needsNightwatchCT) {
-    render('config/nightwatch-ct')
-  }
-  if (needsCypress) {
-    render('config/cypress')
-  }
-  if (needsCypressCT) {
-    render('config/cypress-ct')
-  }
+  // sample project has its own structure, to avoid overriding
+  // render base + configs only if sample is not selected
+  if (needsSampleProject) {
+    render('sample-project')
+  } else {
+    // Render base template
+    render('base')
 
-  if (needsTypeScript) {
-    render('config/typescript')
-
-    // Render tsconfigs
-    render('tsconfig/base')
-    // The content of the root `tsconfig.json` is a bit complicated,
-    // So here we are programmatically generating it.
-    const rootTsConfig = {
-      // It doesn't target any specific files because they are all configured in the referenced ones.
-      files: [],
-      // All templates contain at least a `.node` and a `.app` tsconfig.
-      references: [
-        {
-          path: './tsconfig.node.json'
-        },
-        {
-          path: './tsconfig.app.json'
-        }
-      ]
+    // Add configs.
+    if (needsJsx) {
+      render('config/jsx')
     }
-
-    if (needsCypress) {
-      render('tsconfig/cypress')
-      // Cypress uses `ts-node` internally, which doesn't support solution-style tsconfig.
-      // So we have to set a dummy `compilerOptions` in the root tsconfig to make it work.
-      // I use `NodeNext` here instead of `ES2015` because that's what the actual environment is.
-      // (Cypress uses the ts-node/esm loader when `type: module` is specified in package.json.)
-      // @ts-ignore
-      rootTsConfig.compilerOptions = {
-        module: 'NodeNext'
-      }
+    if (needsRouter) {
+      render('config/router')
     }
-    if (needsCypressCT) {
-      render('tsconfig/cypress-ct')
-      // Cypress Component Testing needs a standalone tsconfig.
-      rootTsConfig.references.push({
-        path: './tsconfig.cypress-ct.json'
-      })
-    }
-    if (needsPlaywright) {
-      render('tsconfig/playwright')
+    if (needsPinia) {
+      render('config/pinia')
     }
     if (needsVitest) {
-      render('tsconfig/vitest')
-      // Vitest needs a standalone tsconfig.
-      rootTsConfig.references.push({
-        path: './tsconfig.vitest.json'
-      })
+      render('config/vitest')
+    }
+    if (needsPlaywright) {
+      render('config/playwright')
     }
     if (needsNightwatch) {
-      render('tsconfig/nightwatch')
-      // Nightwatch needs a standalone tsconfig, but in a different folder.
-      rootTsConfig.references.push({
-        path: './nightwatch/tsconfig.json'
-      })
+      render('config/nightwatch')
     }
     if (needsNightwatchCT) {
-      render('tsconfig/nightwatch-ct')
+      render('config/nightwatch-ct')
+    }
+    if (needsCypress) {
+      render('config/cypress')
+    }
+    if (needsCypressCT) {
+      render('config/cypress-ct')
     }
 
+    if (needsTypeScript) {
+      render('config/typescript')
+
+      // Render tsconfigs
+      render('tsconfig/base')
+      // The content of the root `tsconfig.json` is a bit complicated,
+      // So here we are programmatically generating it.
+      const rootTsConfig = {
+        // It doesn't target any specific files because they are all configured in the referenced ones.
+        files: [],
+        // All templates contain at least a `.node` and a `.app` tsconfig.
+        references: [
+          {
+            path: './tsconfig.node.json'
+          },
+          {
+            path: './tsconfig.app.json'
+          }
+        ]
+      }
+
+      if (needsCypress) {
+        render('tsconfig/cypress')
+        // Cypress uses `ts-node` internally, which doesn't support solution-style tsconfig.
+        // So we have to set a dummy `compilerOptions` in the root tsconfig to make it work.
+        // I use `NodeNext` here instead of `ES2015` because that's what the actual environment is.
+        // (Cypress uses the ts-node/esm loader when `type: module` is specified in package.json.)
+        // @ts-ignore
+        rootTsConfig.compilerOptions = {
+          module: 'NodeNext'
+        }
+      }
+      if (needsCypressCT) {
+        render('tsconfig/cypress-ct')
+        // Cypress Component Testing needs a standalone tsconfig.
+        rootTsConfig.references.push({
+          path: './tsconfig.cypress-ct.json'
+        })
+      }
+      if (needsPlaywright) {
+        render('tsconfig/playwright')
+      }
+      if (needsVitest) {
+        render('tsconfig/vitest')
+        // Vitest needs a standalone tsconfig.
+        rootTsConfig.references.push({
+          path: './tsconfig.vitest.json'
+        })
+      }
+      if (needsNightwatch) {
+        render('tsconfig/nightwatch')
+        // Nightwatch needs a standalone tsconfig, but in a different folder.
+        rootTsConfig.references.push({
+          path: './nightwatch/tsconfig.json'
+        })
+      }
+      if (needsNightwatchCT) {
+        render('tsconfig/nightwatch-ct')
+      }
+
+      fs.writeFileSync(
+        path.resolve(root, 'tsconfig.json'),
+        JSON.stringify(rootTsConfig, null, 2) + '\n',
+        'utf-8'
+      )
+    }
+
+    if (needsVueUse) {
+      render('config/vueUse')
+    }
+    if (needsI18n) {
+      render('config/i18n')
+    }
+    if (needsSonarQube) {
+      render('config/sonarQube')
+    }
+
+    if (needsTanStackQuery) {
+      render('config/tanStackQuery')
+    }
+
+    if (needsTailwind) {
+      render('config/tailwind')
+    }
+
+    // Render ESLint config
+    // By default ESLint, Prettier and Husky will be added
+    // if (needsEslint) {
+    renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPlaywright })
+    render('config/eslint')
+    // }
+    render('config/husky')
+
+    // if (needsPrettier) {
+    render('config/prettier')
+    // }
+
+    // Render code template.
+    // prettier-ignore
+    const codeTemplate =
+      (needsTypeScript ? 'typescript-' : '') +
+      (needsRouter ? 'router' : 'default')
+    render(`code/${codeTemplate}`)
+
+    // main.js generation
     fs.writeFileSync(
-      path.resolve(root, 'tsconfig.json'),
-      JSON.stringify(rootTsConfig, null, 2) + '\n',
-      'utf-8'
+      path.resolve(`${root}/src`, 'main.js'),
+      generateIndex({
+        needsPinia,
+        needsRouter,
+        needsI18n,
+        needsTanStackQuery
+      })
     )
   }
-
-  if (needsVueUse) {
-    render('config/vueUse')
-  }
-  if (needsI18n) {
-    render('config/i18n')
-  }
-  if (needsSonarQube) {
-    render('config/sonarQube')
-  }
-
-  if (needsTanStackQuery) {
-    render('config/tanStackQuery')
-  }
-
-  if (needsTailwind) {
-    render('config/tailwind')
-  }
-
-  // Render ESLint config
-  // By default ESLint, Prettier and Husky will be added
-  // if (needsEslint) {
-  renderEslint(root, { needsTypeScript, needsCypress, needsCypressCT, needsPlaywright })
-  render('config/eslint')
-  // }
-  render('config/husky')
-
-  // if (needsPrettier) {
-  render('config/prettier')
-  // }
-
-  // Render code template.
-  // prettier-ignore
-  const codeTemplate =
-    (needsTypeScript ? 'typescript-' : '') +
-    (needsRouter ? 'router' : 'default')
-  render(`code/${codeTemplate}`)
-
-  // main.js generation
-  fs.writeFileSync(
-    path.resolve(`${root}/src`, 'main.js'),
-    generateIndex({
-      needsPinia,
-      needsRouter,
-      needsI18n,
-      needsTanStackQuery
-    })
-  )
 
   // An external data store for callbacks to share data
   const dataStore = {}
