@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+// test verified commits
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 
