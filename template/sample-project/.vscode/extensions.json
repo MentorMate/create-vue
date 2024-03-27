@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    "Vue.volar",
+    "dariofuzinato.vue-peek",
+    "sdras.vue-vscode-snippets",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-complete-tag",
+    "formulahendry.auto-rename-tag",
+    "mikestead.dotenv",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "stylelint.vscode-stylelint",
+    "Vue.vscode-typescript-vue-plugin",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ]
+}
