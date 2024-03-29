@@ -35,7 +35,6 @@ jobs:
           path: outfile.cjs
           key: ${{ github.sha }}-${{ hashFiles('package-lock.json') }}
   test:
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     needs: build
     strategy:
       matrix:
