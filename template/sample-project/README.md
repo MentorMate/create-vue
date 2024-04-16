@@ -36,16 +36,16 @@ npm run test:unit
 ### Let's create a task/todo list functionality (use `TaskView.vue`)
 1. Encapsulate logical page components into separate components
 2. Do not move taskList variable in `TaskView.vue` (The goal is to test two way data binding and passing data between components)
-   - If you find it difficult you can use Pinia
+    - If you find it difficult you can use Pinia
 3. Create task component
-   - The goal of this component is to create a task
-   - Supply key press controls: On keypress `C` it should trigger create task functionality
-   - alert("So much tasks...") if there are more than 3 tasks created
+    - The goal of this component is to create a task
+    - Supply key press controls: On keypress `C` it should trigger create task functionality
+    - alert("So much tasks...") if there are more than 3 tasks created
 4. Listing tasks:
-   - List all the tasks
-   - Use slot to pass the title
-   - Change the text color of the 2nd task
-   - When the user clicks delete button - it should remove the task
-   - No tasks message
+    - List all the tasks
+    - Use slot to pass the title
+    - Change the text color of the 2nd task
+    - When the user clicks delete button - it should remove the task
+    - No tasks message
 5. Error page - intercept wrong urls
 

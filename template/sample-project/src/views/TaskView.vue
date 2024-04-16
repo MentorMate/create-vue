@@ -1,20 +1,17 @@
-<!--If composition API-->
-<!--<script setup>-->
-<!--import { ref } from 'vue'-->
-<!--// Do not move taskList variable-->
-<!--const taskList = ref([])-->
-<!--</script>-->
+<script>
+// Pick composition or options API
+// import { ref } from 'vue'
+// Do not move taskList variable
+// const taskList = ref([])
 
-<!-- else -->
-<!--<script>-->
-<!--export default {-->
-<!--  data() {-->
-<!--    return {-->
-<!--      taskList: [] // Do not move taskList variable&ndash;&gt;-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
+// export default {
+//   data() {
+//     return {
+//       taskList: [] // Do not move taskList variable-->
+//     }
+//   }
+// }
+</script>
 
 <template>
   <main class="grid grid-cols-1 gap-6">
