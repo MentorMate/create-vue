@@ -1,20 +1,14 @@
-# test
+# Goal
 
-This template should help get you started developing with Vue 3 in Vite.
+The goal of this exam is to ensure your proficiency with Vue:
+- Reactivity
+- Two-way data binding
+- Class/Style binding
+- Watchers
+- Lifecycle hooks
+- Directives
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking.In editors, we need[Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+## Setup Process
 
 ```sh
 npm install
@@ -26,22 +20,32 @@ npm install
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
 
 ```sh
 npm run test:unit
 ```
 
-### Lint with [ESLint](https://eslint.org/), including [plugin](https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/) for checking accessibility rules
+## Task
 
-```sh
-npm run lint
-```
+### Optional
+1. Form validation
+2. Unit testing
+3. Typescript
 
-### Modern native git hooks made easy [Husky](https://typicode.github.io/husky/)
+### Let's create a task/todo list functionality (use `TaskView.vue`)
+1. Encapsulate logical page components into separate components
+2. Do not move taskList variable in `TaskView.vue` (The goal is to test two way data binding and passing data between components)
+    - If you find it difficult you can use Pinia
+3. Create task component
+    - The goal of this component is to create a task
+    - Supply key press controls: On keypress `C` it should trigger create task functionality
+    - alert("So much tasks...") if there are more than 3 tasks created
+4. Listing tasks:
+    - List all the tasks
+    - Use slot to pass the title
+    - Change the text color of the 2nd task
+    - When the user clicks delete button - it should remove the task
+    - No tasks message
+5. Error page - intercept wrong urls
+
