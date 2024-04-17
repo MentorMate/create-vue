@@ -90,8 +90,8 @@ jobs:
             flag-for-i18n: '--i18n'
             flag-for-sonarQube: '--sonarQube'
 
-          - node-version: 20
-            os: ubuntu-latest
+          - node-version: 18
+            os: windows-latest
             flag-for-sample-project: '--sampleProject'
 
     runs-on: ${{ matrix.os }}
