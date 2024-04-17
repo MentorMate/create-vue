@@ -1,4 +1,4 @@
-<script>
+<script setup lang="ts">
 // Pick composition or options API
 // import { ref } from 'vue'
 // Do not move taskList variable
