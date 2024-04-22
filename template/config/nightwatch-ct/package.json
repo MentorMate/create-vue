@@ -3,6 +3,6 @@
     "test:unit": "nightwatch src/**/__tests__/*"
   },
   "dependencies": {
-    "vue": "^3.4.21"
+    "vue": "^3.4.23"
   }
 }
