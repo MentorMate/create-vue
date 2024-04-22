@@ -7,11 +7,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.4.21"
+    "vue": "^3.4.23"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
-    "vite": "^5.2.8",
+    "vite": "^5.2.10",
     "vite-plugin-vue-devtools": "^7.0.27"
   }
 }
