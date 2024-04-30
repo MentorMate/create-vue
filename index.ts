@@ -71,7 +71,7 @@ async function init() {
   const cwd = process.cwd()
   // possible options:
   // --default
-  // --sampleProject
+  // --exam-project/exam
   // --typescript / --ts (always true)
   // --jsx
   // --router / --vue-router
@@ -88,7 +88,8 @@ async function init() {
 
   // alias is not supported by parseArgs
   const options = {
-    sampleProject: { type: 'boolean' },
+    exam: { type: 'boolean' },
+    'exam-project': { type: 'boolean' },
     typescript: { type: 'boolean' },
     ts: { type: 'boolean' },
     'with-tests': { type: 'boolean' },
@@ -107,7 +108,7 @@ async function init() {
   const isFeatureFlagsUsed =
     typeof (
       argv.default ??
-      argv.sampleProject ??
+      (argv.exam || argv['exam-project']) ??
       (argv.ts || argv.typescript) ??
       argv.jsx ??
       (argv.router || argv['vue-router']) ??
@@ -134,7 +135,6 @@ async function init() {
     projectName?: string
     shouldOverwrite?: boolean
     packageName?: string
-    needsSampleProject?: boolean
     needsTypeScript?: boolean
     needsJsx?: boolean
     needsRouter?: boolean
@@ -154,7 +154,6 @@ async function init() {
     // - Project name:
     //   - whether to overwrite the existing directory or not?
     //   - enter a valid package name for package.json
-    // - Create a sample project using Pinia, Vue-router and Vitest?
     // - Project language: JavaScript / TypeScript
     // - Add JSX Support?
     // - Install Vue Router for SPA development?
@@ -209,14 +208,6 @@ async function init() {
           validate: (dir) => isValidPackageName(dir) || language.packageName.invalidMessage
         },
         {
-          name: 'needsSampleProject',
-          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-          message: 'Create a sample project using Pinia, Vue-router and Vitest?',
-          initial: false,
-          active: language.defaultToggleOptions.active,
-          inactive: language.defaultToggleOptions.inactive
-        },
-        {
           name: 'needsJsx',
           type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsJsx.message,
@@ -226,8 +217,7 @@ async function init() {
         },
         {
           name: 'needsRouter',
-          type: (prev, values) =>
-            isFeatureFlagsUsed || values.needsSampleProject ? null : 'toggle',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsRouter.message,
           initial: false,
           active: language.defaultToggleOptions.active,
@@ -235,8 +225,7 @@ async function init() {
         },
         {
           name: 'needsPinia',
-          type: (prev, values) =>
-            isFeatureFlagsUsed || values.needsSampleProject ? null : 'toggle',
+          type: () => (isFeatureFlagsUsed ? null : 'toggle'),
           message: language.needsPinia.message,
           initial: false,
           active: language.defaultToggleOptions.active,
@@ -336,7 +325,6 @@ async function init() {
     projectName,
     packageName = projectName ?? defaultProjectName,
     shouldOverwrite = argv.force,
-    needsSampleProject = argv.sampleProject,
     needsJsx = argv.jsx,
     needsTypeScript = true, // prefer TS as a solution
     needsRouter = argv.router || argv['vue-router'],
@@ -381,10 +369,11 @@ async function init() {
     renderTemplate(templateDir, root, callbacks)
   }
 
-  // Sample project has its own structure, to avoid overriding
-  // render base + configs only if sample is not selected
-  if (needsSampleProject) {
-    render('sample-project')
+  // Exam project to be used for Vue assesment
+  const isExamProjectSelected = argv['exam-project'] || argv.exam
+
+  if (isExamProjectSelected) {
+    render('exam-project')
   } else {
     // Render base template
     render('base')
@@ -617,26 +606,29 @@ async function init() {
         ? 'bun'
         : 'npm'
 
-  // README generation
-  fs.writeFileSync(
-    path.resolve(root, 'README.md'),
-    generateReadme({
-      projectName: result.projectName ?? result.packageName ?? defaultProjectName,
-      packageManager,
-      needsTypeScript,
-      needsVitest,
-      needsCypress,
-      needsNightwatch,
-      needsPlaywright,
-      needsNightwatchCT,
-      needsCypressCT,
-      needsVueUse,
-      needsI18n,
-      needsSonarQube,
-      needsTanStackQuery,
-      needsTailwind
-    })
-  )
+  // README generation - should happen unless exam-project is
+  // rendered since this case has its own README
+  if (!isExamProjectSelected) {
+    fs.writeFileSync(
+      path.resolve(root, 'README.md'),
+      generateReadme({
+        projectName: result.projectName ?? result.packageName ?? defaultProjectName,
+        packageManager,
+        needsTypeScript,
+        needsVitest,
+        needsCypress,
+        needsNightwatch,
+        needsPlaywright,
+        needsNightwatchCT,
+        needsCypressCT,
+        needsVueUse,
+        needsI18n,
+        needsSonarQube,
+        needsTanStackQuery,
+        needsTailwind
+      })
+    )
+  }
 
   console.log(`\n${language.infos.done}\n`)
   if (root !== cwd) {
@@ -645,8 +637,6 @@ async function init() {
       `  ${bold(green(`cd ${cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName}`))}`
     )
   }
-  console.log(`  ${bold(yellow('In order to use husky you need to initialize git'))}`)
-  console.log(`  ${bold(green('git init'))}`)
   console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`)
   console.log(`  ${bold(green(getCommand(packageManager, 'format')))}`)
   if (needsStorybook) {
