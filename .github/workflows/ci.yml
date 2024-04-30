@@ -92,12 +92,12 @@ jobs:
 
           - node-version: 18
             os: windows-latest
-            flag-for-sample-project: '--sampleProject'
+            flag-for-exam-project: '--exam-project'
 
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.os == 'windows-latest' }}
     env:
-      FEATURE_FLAGS: ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }}  ${{ matrix.flag-for-e2e }} ${{ matrix.flag-for-sample-project }}
+      FEATURE_FLAGS: ${{ matrix.flag-for-jsx }} ${{ matrix.flag-for-router }} ${{ matrix.flag-for-pinia }}  ${{ matrix.flag-for-e2e }} ${{ matrix.flag-for-exam-project }}
       # Sometimes the Linux runner can't verify Cypress in 30s
       CYPRESS_VERIFY_TIMEOUT: 60000
     steps:
@@ -147,41 +147,41 @@ jobs:
           path: ${{ env.PLAYWRIGHT_BROWSERS_PATH }}
 
       - if: ${{ (contains(env.FEATURE_FLAGS, '--')) }}
-        name: Create the sample project with feature flags
+        name: Create the exam project with feature flags
         working-directory: ../
-        run: node ./create-vue/outfile.cjs sample-project ${{ env.FEATURE_FLAGS }}
+        run: node ./create-vue/outfile.cjs exam-project ${{ env.FEATURE_FLAGS }}
 
       - if: ${{ !(contains(env.FEATURE_FLAGS, '--')) }}
-        name: Create the sample project with default options
+        name: Create the exam project with default options
         working-directory: ../
-        run: node ./create-vue/outfile.cjs sample-project --default
+        run: node ./create-vue/outfile.cjs exam-project --default
 
-      - name: Install dependencies in the sample project
-        working-directory: ../sample-project
+      - name: Install dependencies in the exam project
+        working-directory: ../exam-project
         run: npm install
 
       - if: ${{ contains(matrix.flag-for-vitest, '--') }}
         name: Run unit test script
-        working-directory: ../sample-project
+        working-directory: ../exam-project
         run: npm run test:unit
 
       - name: Run build script
-        working-directory: ../sample-project
+        working-directory: ../exam-project
         run: npm run build
 
       - name: Download Cypress
         if: ${{ contains(matrix.flag-for-e2e, '--cypress') }}
-        working-directory: ../sample-project
+        working-directory: ../exam-project
         run: |
           npm exec cypress cache list
           npm exec cypress install
 
       - if: ${{ contains(matrix.flag-for-e2e, '--playwright') }}
         name: Install Playwright dependencies
-        working-directory: ../sample-project
+        working-directory: ../exam-project
         run: npx playwright install --with-deps
 
       - if: ${{ contains(matrix.flag-for-e2e, '--') }}
         name: Run e2e test script
-        working-directory: ../sample-project
+        working-directory: ../exam-project
         run: npm run test:e2e

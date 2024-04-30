@@ -109,4 +109,4 @@ dist
 
 playground/
 .idea/**
-/template/sample-project/package-lock.json
+/template/exam-project/package-lock.json
