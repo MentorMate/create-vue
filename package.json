@@ -55,7 +55,7 @@
     "@commitlint/config-conventional": "^19.2.2",
     "@tsconfig/node20": "^20.1.4",
     "@types/eslint": "^8.56.10",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.10",
     "@types/prompts": "^2.4.9",
     "@vue/create-eslint-config": "^0.3.3",
     "@vue/tsconfig": "^0.5.1",
@@ -70,7 +70,7 @@
     "npm-run-all2": "^6.1.2",
     "prettier": "^3.2.5",
     "prompts": "^2.4.2",
-    "vitest": "^1.5.2",
+    "vitest": "^1.6.0",
     "zx": "^8.0.2",
     "chokidar-cli": "^3.0.0"
   },
