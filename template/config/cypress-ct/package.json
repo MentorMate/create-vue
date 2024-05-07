@@ -4,7 +4,7 @@
     "test:unit:dev": "cypress open --component"
   },
   "dependencies": {
-    "vue": "^3.4.25"
+    "vue": "^3.4.27"
   },
   "devDependencies": {
     "cypress": "^13.8.1"
