@@ -55,7 +55,7 @@
     "@commitlint/config-conventional": "^19.2.2",
     "@tsconfig/node20": "^20.1.4",
     "@types/eslint": "^8.56.10",
-    "@types/node": "^20.12.10",
+    "@types/node": "^20.12.11",
     "@types/prompts": "^2.4.9",
     "@vue/create-eslint-config": "^0.3.3",
     "@vue/tsconfig": "^0.5.1",
