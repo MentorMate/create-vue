@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "@vueuse/core": "^10.11.0"
+    "@vueuse/core": "^10.11.1"
   }
 }
