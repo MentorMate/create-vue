@@ -4,6 +4,6 @@
     "sonar": "npx sonar-scanner"
   },
   "devDependencies": {
-    "sonarqube-scanner": "^4.2.1"
+    "sonarqube-scanner": "^4.2.2"
   }
 }
