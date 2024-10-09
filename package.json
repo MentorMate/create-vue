@@ -62,7 +62,7 @@
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
     "ejs": "^3.1.10",
-    "esbuild": "^0.19.5",
+    "esbuild": "^0.24.0",
     "esbuild-plugin-license": "^1.2.3",
     "husky": "^9.1.6",
     "kolorist": "^1.8.0",
