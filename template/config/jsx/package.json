@@ -3,7 +3,7 @@
     "vue": "^3.5.12"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue-jsx": "^4.0.1",
+    "@vitejs/plugin-vue-jsx": "^5.1.6",
     "vite": "^5.4.10"
   }
 }
